@@ -17,7 +17,7 @@ question = ""
 
 #pull questions from csv file on dropbox, run daily at midnight. From a different script. Q's stored as CSV.
 
-def add_response_to_database():
+def add_response_to_database(score, question):
     """Add response to SQLite 3 database"""
 
     sqlite_file = 'srvy.db'
@@ -54,19 +54,19 @@ def main():
             score = 2 
             question = qs
             sleep(.5)
-            add_response_to_database()
+            add_response_to_database(score, question)
             
         elif okay.is_pressed: 
             score = 1
             question = qs
             sleep(.5)
-            add_response_to_database()
+            add_response_to_database(score, question)
 
         elif dislike.is_pressed:
             score = 0
             question = qs
             sleep(.5)
-            add_response_to_database()
+            add_response_to_database(score, question)
 
 main()
 
