@@ -3,7 +3,7 @@ from time import sleep
 from datetime import datetime
 import random
 import sqlite3
-from signal import pause
+
 
 print('initializing variables')
 like = Button(18)
@@ -41,6 +41,7 @@ def add_response_to_database():
 
     conn.commit()
     conn.close()
+    main()
 
 def main():
 
