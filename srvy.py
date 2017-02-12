@@ -22,6 +22,7 @@ def add_response_to_database():
     date_column = 'date'
     time_column = 'time'
     score_column = 'score'
+    question_column = 'question'
 
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -30,7 +31,7 @@ def add_response_to_database():
     current_time = datetime.now().strftime('%H:%M:%S')
 
     try:
-        c.execute('''INSERT INTO responses (date, time, score) VALUES (?,?,?)''', (current_date, current_time, score))
+        c.execute('''INSERT INTO responses (date, time, score) VALUES (?,?,?,?)''', (current_date, current_time, score, question))
         print ("Successfully added response to database.")
     except Exception as e:
         print(e)
@@ -47,16 +48,19 @@ def main():
     while True:
         if like.is_pressed:
             score = 2 
+            question = qs
             sleep(.5)
             add_response_to_database()
             
         elif okay.is_pressed: 
             score = 1
+            question = qs
             sleep(.5)
             add_response_to_database()
 
         elif dislike.is_pressed:
             score = 0
+            question = qs
             sleep(.5)
             add_response_to_database()
 
