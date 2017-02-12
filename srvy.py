@@ -31,6 +31,7 @@ def add_response_to_database():
 
     try:
         c.execute('''INSERT INTO responses (date, time, score) VALUES (?,?,?)''', (current_date, current_time, score))
+        print ("Successfully added response to database.")
     except Exception as e:
         print(e)
 
