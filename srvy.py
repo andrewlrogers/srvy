@@ -13,6 +13,7 @@ dislike = Button(15)
 questions = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today', 'Were you able to find what you were looking for?']
 
 score = 0
+question = ""
 
 #pull questions from csv file on dropbox, run daily at midnight. From a different script. Q's stored as CSV.
 
