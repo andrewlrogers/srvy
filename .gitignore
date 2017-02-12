@@ -1,0 +1,93 @@
+# Created by https://www.gitignore.io/api/images,vagrant,vim
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+*.py[cod]
+**/static/
+
+### Images ###
+# JPEG
+.jpg
+.jpeg
+.jpe
+.jif
+.jfif
+.jfi
+
+# JPEG 2000
+.jp2
+.j2k
+.jpf
+.jpx
+.jpm
+.mj2
+
+# JPEG XR
+.jxr
+.hdp
+.wdp
+
+# Graphics Interchange Format
+.gif
+
+# RAW
+.raw
+
+# Web P
+.webp
+
+# Portable Network Graphics
+.png
+
+# Animated Portable Network Graphics
+.apng
+
+# Multiple-image Network Graphics
+.mng
+
+# Tagged Image File Format
+.tiff
+.tif
+
+# Scalable Vector Graphics
+.svg
+.svgz
+
+# Portable Document Format
+.pdf
+
+# X BitMap
+.xbm
+
+# BMP
+.bmp
+.dib
+
+# ICO
+.ico
+
+# Vagrant
+.vagrant/
+
+# Database
+movies.db
+movies-watched.db
+
+# Django
+sodiepop_site/db.sqlite3
+sodiepop_site/sodiepop_site/__pycache__/
+
+### Vim ###
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+.pyc
+*flymake.py
