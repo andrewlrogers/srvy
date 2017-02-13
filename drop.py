@@ -1,9 +1,22 @@
 import dropbox
+import pathlib
+import re
 
+# the source file
+folder = pathlib.Path(".")    # located in this folder
+filename = "test.txt"         # file name
+filepath = folder / filename  # path object, defining the file
 
-dbx = dropbox.Dropbox("I4gEG90KcJAAAAAAAAACNBpxYbWSAgK4hpufdGTK2ox1eIlhU9Nfzg6BeZS9ttz9")
+# target location in Dropbox
+target = "/Temp/"              # the target folder
+targetfile = target + filename   # the target path and file name
 
-for entry in dbx.files_list_folder('').entries:
-	print(entry.name)
+# Create a dropbox object using an API v2 key
+d = dropbox.Dropbox(your_api_access_token)
 
-dbx.files_download('/iiti.csv')
+# open the file and upload it
+with filepath.open("rb") as f:
+   # upload gives you metadata about the file
+   # we want to overwite any previous version of the file
+   meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
+
