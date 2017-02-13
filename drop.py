@@ -1,22 +1,11 @@
 import dropbox
-import pathlib
-import re
 
-# the source file
-folder = pathlib.Path(".")    # located in this folder
-filename = "questions.csv"         # file name
-filepath = folder / filename  # path object, defining the file
+access_token = "I4gEG90KcJAAAAAAAAACORywbA7QoPUArtQGf0TstZFTmkIsDTrLksBSIGBHKD8I"
 
-# target location in Dropbox
-target = "/"              # the target folder
-targetfile = target + filename   # the target path and file name
+dbx = dropbox.Dropbox(access_token)
 
-# Create a dropbox object using an API v2 key
-d = dropbox.Dropbox("I4gEG90KcJAAAAAAAAACOLjenKg2dUhaqFKNRYVOgiCnBQ6VvDFA3WUMKaZVJNBJ")
+local = '/home/pi/srvy/questions.csv'
 
-# open the file and upload it
-with filepath.open("rb") as f:
-   # upload gives you metadata about the file
-   # we want to overwite any previous version of the file
-   meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
-
+with open (local, 'w') as f:
+    metadata, res = dbx.files_download('/questions.csv')
+    f.write(res.content)
