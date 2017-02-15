@@ -5,28 +5,29 @@ import random
 import sqlite3
 import pygame
 
+question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
+bg_color = random.choice([(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)]) #crocker colors
+
 
 #Pygame Setup
 pygame.init()
-screen_width=1440 #Set width and height to match your monitor.
-screen_height=900
+
+screen_width=800 #Set width and height to match your monitor.
+screen_height=480
+
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
-clock = pygame.time.Clock()
 pygame.mouse.set_visible(False) # Hides the mouse cursor
 
-done = False
 font = pygame.font.SysFont("Futura, Helvetica, Arial", 48) #system fonts and size
-text = font.render(qs, True, (255,255,255)) #text, anti-alias, color
+#text = font.render(question, True, (255, 255, 255))
+done = False
+
 
 #Button Setup
 like = Button(18)
 okay = Button(14)
 dislike = Button(15)
 
-qs = random.choice(['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today', 'Were you able to find what you were looking for?'])
-bg_color = random.choice([(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)]) #crocker colors
-
-#pull questions from csv file on dropbox, run daily at midnight. From a different script. Q's stored as CSV.
 
 def add_response_to_database(score, question):
     """Add response to SQLite 3 database"""
@@ -55,17 +56,19 @@ def add_response_to_database(score, question):
     main()
 
 def main():
-    while not done:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                done = True
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                done = True
+    
+    qs = random.choice(['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today', 'Were you able to find what you were looking for?'])
+    text = font.render(qs, True, (255, 255, 255))
+    screen.fill(bg_color) #sets background color
+    screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to
+    pygame.display.flip() 	
 
-            screen.fill(bg_color) #sets background color
-            screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to
-            pygame.display.flip()
-            
+    while True:
+#        for event in pygame.event.get():
+#           if event.type == pygame.QUIT:
+#              done = True
+#            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+#                done = True
         if like.is_pressed:
             score = 2
             question = qs

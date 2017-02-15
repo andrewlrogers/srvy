@@ -3,8 +3,8 @@ import random
 
 
 pygame.init()
-screen_width=1440 #Set width and height to match your monitor.
-screen_height=900
+screen_width=800 #Set width and height to match your monitor.
+screen_height=480
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
 clock = pygame.time.Clock()
 pygame.mouse.set_visible(False) # Hides the mouse cursor
