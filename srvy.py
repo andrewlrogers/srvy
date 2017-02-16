@@ -6,7 +6,7 @@ import sqlite3
 import pygame
 
 question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
-bg_color = random.choice([(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)]) #crocker colors
+bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)] #crocker colors
 
 
 #Pygame Setup
@@ -57,18 +57,14 @@ def add_response_to_database(score, question):
 
 def main():
     
-    qs = random.choice(['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today', 'Were you able to find what you were looking for?'])
+    qs = random.choice(question)
     text = font.render(qs, True, (255, 255, 255))
-    screen.fill(bg_color) #sets background color
+    screen.fill(random.choice(bg_color)) #sets background color
     screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to
-    pygame.display.flip() 	
+    pygame.display.flip()
 
     while True:
-#        for event in pygame.event.get():
-#           if event.type == pygame.QUIT:
-#              done = True
-#            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-#                done = True
+
         if like.is_pressed:
             score = 2
             question = qs
