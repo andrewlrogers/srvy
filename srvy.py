@@ -15,18 +15,21 @@ pygame.init()
 screen_width=800 #Set width and height to match your monitor.
 screen_height=480
 
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
 pygame.mouse.set_visible(False) # Hides the mouse cursor
 
 font = pygame.font.SysFont("Futura, Helvetica, Arial", 48) #system fonts and size
-#text = font.render(question, True, (255, 255, 255))
-done = False
 
 
 #Button Setup
 like = Button(18)
 okay = Button(14)
 dislike = Button(15)
+
+def questions():
+    question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
+    return random.choice(question)    
+
 
 
 def add_response_to_database(score, question):
@@ -48,6 +51,11 @@ def add_response_to_database(score, question):
     try:
         c.execute('''INSERT INTO responses (date, time, score, question) VALUES (?,?,?,?)''', (current_date, current_time, score, question))
         print ("Successfully added response to database.")
+	text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
+        screen.fill((105, 58, 119)) #sets background color
+        screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to center of screen
+        pygame.display.flip()
+        sleep(2) #gives viewer a chance to read
     except Exception as e:
         print(e)
 
@@ -56,31 +64,30 @@ def add_response_to_database(score, question):
     main()
 
 def main():
-    
-    qs = random.choice(question)
-    text = font.render(qs, True, (255, 255, 255))
+    #question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
+    qs = questions() #calls questions function that returns random question.
+    text = font.render(qs, True, (255, 255, 255)) #displays text, anti-aliasing  and sets text color
     screen.fill(random.choice(bg_color)) #sets background color
-    screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to
+    screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to screen and centers
     pygame.display.flip()
 
-    while True:
 
+    while True:
         if like.is_pressed:
-            score = 2
-            question = qs
+            score = 2 
             sleep(.5)
-            add_response_to_database(score, question)
+            add_response_to_database(score, qs)
 
         elif okay.is_pressed:
             score = 1
-            question = qs
             sleep(.5)
-            add_response_to_database(score, question)
+            add_response_to_database(score, qs)
 
         elif dislike.is_pressed:
             score = 0
-            question = qs
             sleep(.5)
-            add_response_to_database(score, question)
+            add_response_to_database(score, qs)
+
 
 main()
+
