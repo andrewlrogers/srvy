@@ -1,9 +1,11 @@
 import dropbox
 
+access_token = "I4gEG90KcJAAAAAAAAACORywbA7QoPUArtQGf0TstZFTmkIsDTrLksBSIGBHKD8I"
 
-dbx = dropbox.Dropbox("I4gEG90KcJAAAAAAAAACNBpxYbWSAgK4hpufdGTK2ox1eIlhU9Nfzg6BeZS9ttz9")
+dbx = dropbox.Dropbox(access_token)
 
-for entry in dbx.files_list_folder('').entries:
-	print(entry.name)
+local = '/home/pi/srvy/questions.csv'
 
-dbx.files_download('/iiti.csv')
+with open (local, 'w') as f:
+    metadata, res = dbx.files_download('/questions.csv')
+    f.write(res.content)

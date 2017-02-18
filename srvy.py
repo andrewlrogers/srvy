@@ -4,9 +4,11 @@ from datetime import datetime
 import random
 import sqlite3
 import pygame
+import csv
 
 
-bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)] #crocker colors
+
+#question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
 
 
 #Pygame Setup
@@ -14,6 +16,7 @@ pygame.init()
 
 screen_width=800 #Set width and height to match your monitor.
 screen_height=480
+bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)] #crocker colors
 
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
 pygame.mouse.set_visible(False) # Hides the mouse cursor
@@ -26,8 +29,17 @@ like = Button(18)
 okay = Button(14)
 dislike = Button(15)
 
+def pull_qs_from_csv():
+    with open('questions.csv', 'rU') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=',', quotechar='|')
+        question=[]
+        for row in readCSV:
+            q = row[0]
+            question.append(q)
+        return question
+
 def questions():
-    question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
+    #question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
     return random.choice(question)    
 
 
@@ -89,5 +101,6 @@ def main():
             add_response_to_database(score, qs)
 
 
+question = pull_qs_from_csv()
 main()
 
