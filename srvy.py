@@ -5,7 +5,7 @@ import random
 import sqlite3
 import pygame
 
-question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
+
 bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)] #crocker colors
 
 
