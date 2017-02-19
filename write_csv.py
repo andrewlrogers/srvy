@@ -18,7 +18,9 @@ conn =  sqlite3.connect(sqlite_file)
 c = conn.cursor()
 
 
-c.execute("SELECT * FROM responses WHERE date LIKE '%"+ current_date +"%'")
+#c.execute("SELECT * FROM responses WHERE date LIKE '%"+ current_date +"%'")
+
+c.execute("SELECT * FROM responses WHERE date LIKE ?", current_date)
 
 csvWriter = csv.writer(open(destination_file, 'w'))
 rows = c.fetchall()
