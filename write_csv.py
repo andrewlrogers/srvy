@@ -3,7 +3,7 @@ import csv
 from datetime import datetime
 
 
-current_date = datetime.now().strftime('%Y-%m-%d')
+current_date = str(datetime.now().strftime('%Y-%m-%d'))
 
 destination_file = 'srvy' + current_date + '.csv'
 sqlite_file = 'srvy.db'
@@ -20,7 +20,7 @@ c = conn.cursor()
 
 #c.execute("SELECT * FROM responses WHERE date LIKE '%"+ current_date +"%'")
 
-c.execute("SELECT * FROM responses WHERE date LIKE ?", current_date)
+c.execute("SELECT * FROM responses WHERE date = ?", (current_date,))
 
 csvWriter = csv.writer(open(destination_file, 'w'))
 rows = c.fetchall()
