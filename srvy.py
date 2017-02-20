@@ -7,10 +7,6 @@ import pygame
 import csv
 
 
-
-#question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
-
-
 #Pygame Setup
 pygame.init()
 
@@ -29,7 +25,7 @@ like = Button(18)
 okay = Button(14)
 dislike = Button(15)
 
-def pull_qs_from_csv():
+def pull_qs_from_csv(): #reads the questions into mem from csv in case they have been updated.
     with open('questions.csv', 'rU') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',', quotechar='|')
         question=[]
@@ -38,11 +34,8 @@ def pull_qs_from_csv():
             question.append(q)
         return question
 
-def questions():
-    #question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
-    return random.choice(question)    
-
-
+def random_questions(): #pulls returns a random question into main loop.
+    return random.choice(question)
 
 def add_response_to_database(score, question):
     """Add response to SQLite 3 database"""
@@ -63,7 +56,7 @@ def add_response_to_database(score, question):
     try:
         c.execute('''INSERT INTO responses (date, time, score, question) VALUES (?,?,?,?)''', (current_date, current_time, score, question))
         print ("Successfully added response to database.")
-	text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
+	    text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
         screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to center of screen
         pygame.display.flip()
@@ -73,20 +66,20 @@ def add_response_to_database(score, question):
 
     conn.commit()
     conn.close()
+
     main()
 
 def main():
-    #question = ['Did you enjoy your visit today?', 'Would you reccomend us to a friend?', 'Were you satisfied with the service you received today?', 'Were you able to find what you were looking for?']
-    qs = questions() #calls questions function that returns random question.
+    qs = random_questions() #calls questions function that returns random question.
+
     text = font.render(qs, True, (255, 255, 255)) #displays text, anti-aliasing  and sets text color
     screen.fill(random.choice(bg_color)) #sets background color
     screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to screen and centers
     pygame.display.flip()
 
-
     while True:
         if like.is_pressed:
-            score = 2 
+            score = 2
             sleep(.5)
             add_response_to_database(score, qs)
 
@@ -103,4 +96,3 @@ def main():
 
 question = pull_qs_from_csv()
 main()
-
