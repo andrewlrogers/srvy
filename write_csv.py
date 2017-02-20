@@ -1,4 +1,4 @@
-"""Export all responses from yesterday and save them to a CSV file."""
+"""Export all responses from yesterday and save them to a .csv file."""
 
 import sqlite3
 import csv
@@ -27,11 +27,13 @@ c = conn.cursor()
 
 #c.execute("SELECT * FROM responses WHERE date LIKE '%"+ current_date +"%'")
 
-c.execute("SELECT * FROM responses WHERE date = ?", (yesterday,))
+try:
+    c.execute("SELECT * FROM responses WHERE date = ?", (yesterday,))
+    csvWriter = csv.writer(open(full_export_path, 'w'))
+    rows = c.fetchall()
 
-csvWriter = csv.writer(open(full_export_path, 'w'))
-rows = c.fetchall()
-
-for row in rows:
-    csvWriter.writerow(row)
+    for row in rows:
+        csvWriter.writerow(row)
+except:
+    pass
 
