@@ -27,7 +27,7 @@ okay = Button(14)
 dislike = Button(15)
 
 def pull_qs_from_csv(): #reads the questions into mem from csv in case they have been updated.
-    with open('questions.csv', 'rU') as csvfile:
+    with open('synch/questions.csv', 'rU') as csvfile:
         readCSV = csv.reader(csvfile, delimiter=',', quotechar='|')
         question=[]
         for row in readCSV:
@@ -57,7 +57,7 @@ def add_response_to_database(score, question):
     try:
         c.execute('''INSERT INTO responses (date, time, score, question) VALUES (?,?,?,?)''', (current_date, current_time, score, question))
         print ("Successfully added response to database.")
-	    text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
+	text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
         screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to center of screen
         pygame.display.flip()
@@ -72,7 +72,7 @@ def add_response_to_database(score, question):
 
 def main():
     qs = random_questions() #calls questions function that returns random question.
-
+    print(qs)
     text = font.render(qs, True, (255, 255, 255)) #displays text, anti-aliasing  and sets text color
     screen.fill(random.choice(bg_color)) #sets background color
     screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to screen and centers
