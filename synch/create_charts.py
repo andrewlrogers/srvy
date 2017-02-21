@@ -3,18 +3,6 @@ import leather
 import csv
 import sqlite3
 
-with open('../export/test.csv') as f:
-    reader = csv.reader(f)
-    next(reader)
-    data = list(reader)[:10]
-
-    for row in data:
-        row[0] = float(row[0]) if row[0] is not None else None
-
-chart = leather.Chart('Data from CSV reader')
-chart.add_bars(data)
-chart.to_svg('../export/charts/simple_pairs.svg')
-
 
 ###########
 from datetime import datetime, timedelta
@@ -23,16 +11,17 @@ import os
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
-export_directory = '../export'
+export_directory = 'export'
 export_filename = 'srvy' + yesterday + '.csv'
-full_export_path = os.path.join(export_directory, export_filename)
-
-sqlite_file = '../srvy.db'
+full_export_path = os.path.join("../", export_directory, export_filename) 
+sqlite_file = os.path.join("../", 'srvy.db')
 table_name = 'responses'
 
 conn =  sqlite3.connect(sqlite_file)
 c = conn.cursor()
 
+
+# Create list of questions from yesterday
 questions_from_yesterday = []
 
 try:
@@ -43,5 +32,20 @@ try:
 except:
     pass
 
+# Create chart with breakdown of scores for one question from yesterday
+score_breakdown = []
 
-print(questions_from_yesterday)
+try:
+    # Loop through 3 times, since there are 3 possible scores
+    i = 0
+    while i != 3:
+        pud = c.execute("SELECT CAST(score as text), COUNT(score)FROM responses WHERE date = ? and question = ? and score = ?", (yesterday, questions_from_yesterday[0][0], i))
+        for response in pud:
+            score_breakdown.append(response)
+        i = i+1
+except:
+    pass
+
+chart = leather.Chart(questions_from_yesterday[0][0])
+chart.add_columns(score_breakdown)
+chart.to_svg(os.path.join("../", 'export/charts/yesterday_question.svg'))
