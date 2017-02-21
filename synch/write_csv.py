@@ -10,11 +10,11 @@ import os
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
-export_directory = 'export'
+export_directory = '../export'
 export_filename = 'srvy' + yesterday + '.csv'
 full_export_path = os.path.join(export_directory, export_filename)
 
-sqlite_file = 'srvy.db'
+sqlite_file = '../srvy.db'
 table_name = 'responses'
 
 
