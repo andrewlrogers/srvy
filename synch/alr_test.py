@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime, timedelta
 import string
 
-from bokeh.charts import Bar, output_file, show
+from bokeh.charts import Bar, Scatter,  output_file, show
 
 #Get time in order
 today = str(datetime.now().strftime('%Y-%m-%d'))
@@ -22,12 +22,15 @@ all_query = "SELECT * FROM responses"
 conn = sqlite3.connect('../srvy.db')
 
 #Setting up our data frame
-df = pd.read_sql_query(all_query, conn, parse_dates= 'time')
-
+df = pd.read_sql_query(yesterday_query, conn, parse_dates= 'time')
+by_question = df.groupby('question')
 
 #The actual chart
 bar = Bar(df, values = 'score', label = 'question', stack =  'score',
-     title = 'Test Chart for ' + yesterday, agg = 'count', legend= 'bottom_left',  plot_width = 900)
+     title = 'Test Chart for ' + yesterday, agg = 'count', legend= 'bottom_left', plot_height = 900, plot_width = 900)
+
+scatter = Scatter(df, x = 'time', y ='date' )
+
 
 #We can change path.
 output_file('../export/hist.html')
