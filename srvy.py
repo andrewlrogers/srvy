@@ -22,9 +22,10 @@ font = pygame.font.SysFont("Futura, Helvetica, Arial", 48) #system fonts and siz
 
 
 #Button Setup
-like = Button(18)
-okay = Button(14)
+love = Button(18)
+like = Button(14)
 dislike = Button(15)
+hate = Button(17)
 
 def pull_qs_from_csv(): #reads the questions into mem from csv in case they have been updated.
     with open('synch/questions.csv', 'rU') as csvfile:
@@ -38,7 +39,7 @@ def pull_qs_from_csv(): #reads the questions into mem from csv in case they have
 def random_questions(): #pulls returns a random question into main loop.
     return random.choice(question)
 
-def add_response_to_database(score, question):
+def add_response_to_database(score, question, value):
     """Add response to SQLite 3 database"""
 
     sqlite_file = 'srvy.db'
@@ -47,6 +48,7 @@ def add_response_to_database(score, question):
     time_column = 'time'
     score_column = 'score'
     question_column = 'question'
+    value_column = 'value'
 
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -55,7 +57,7 @@ def add_response_to_database(score, question):
     current_time = datetime.now().strftime('%H:%M:%S')
 
     try:
-        c.execute('''INSERT INTO responses (date, time, score, question) VALUES (?,?,?,?)''', (current_date, current_time, score, question))
+        c.execute('''INSERT INTO responses (date, time, score, question, value) VALUES (?,?,?,?)''', (current_date, current_time, score, question, value))
         print ("Successfully added response to database.")
 	text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
@@ -79,20 +81,29 @@ def main():
     pygame.display.flip()
 
     while True:
-        if like.is_pressed:
+        if love.is_pressed:
             score = 2
+            value = 'Love'
             sleep(.5)
-            add_response_to_database(score, qs)
+            add_response_to_database(score, qs, value)
 
-        elif okay.is_pressed:
+        elif like.is_pressed:
             score = 1
             sleep(.5)
-            add_response_to_database(score, qs)
+            value = 'Like'
+            add_response_to_database(score, qs, value)
 
         elif dislike.is_pressed:
-            score = 0
+            score = -1
             sleep(.5)
-            add_response_to_database(score, qs)
+            value = 'Dislike'
+            add_response_to_database(score, qs, value)
+
+        elif hate.is_pressed:
+            score = -2
+            sleep(.5)
+            value = 'Hate'
+            add_response_to_database(score, qs, value)
 
 
 question = pull_qs_from_csv()
