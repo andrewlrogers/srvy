@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime, timedelta
 import string
 
-from bokeh.charts import Bar, BoxPlot,  output_file, show
+from bokeh.charts import Bar, Donut, TimeSeries, output_file, show
 
 #Get time in order
 today = str(datetime.now().strftime('%Y-%m-%d'))
@@ -22,19 +22,18 @@ all_query = "SELECT * FROM responses"
 conn = sqlite3.connect('../srvy.db')
 
 #Setting up our data frame
-df = pd.read_sql_query(yesterday_query, conn, parse_dates= 'time')
-by_question = df.groupby('question')
+df = pd.read_sql_query(all_query, conn, parse_dates= 'time')
+by_question = df.groupby('question').size()
 
 #The actual chart
-bar1 = Bar(df, values = 'score', label = 'question', stack =  'opinion',
-     title = 'Test Chart for ' + yesterday, agg = 'count', legend= 'bottom_left', plot_height = 900, plot_width = 900)
+bar1 = Bar(df, values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
 
-bar2 = Bar(df, values = 'score', label = 'opinion', stack =  'score',
-     title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', plot_height = 900, plot_width = 900)
+donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
 
-Box1 = BoxPlot(df, values = 'score', label = 'question')
+chron_chart = TimeSeries(df,x = 'time', y = 'opinion', color= 'question', dash='question')
 #We can change path.
 output_file('../export/hist.html')
 
+
 #we wont need to show the final chart, but good for testing
-show(Box1)
+show(bar1)
