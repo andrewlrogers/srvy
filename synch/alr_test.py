@@ -13,7 +13,6 @@ fixed_date = '2017-02-26'
 
 #getting yesterday variable into the sqlite3 query. If you know a better way please use it.
 yesterday_query = "SELECT * FROM responses WHERE date = '?';"
-yesterday_query= string.replace(yesterday_query, '?', fixed_date)
 
 #test query to see all output.
 all_query = "SELECT * FROM responses"
@@ -22,7 +21,7 @@ all_query = "SELECT * FROM responses"
 conn = sqlite3.connect('../srvy.db')
 
 #Setting up our data frame
-df = pd.read_sql_query(all_query, conn, parse_dates= 'time')
+df = pd.read_sql(all_query, conn, parse_dates= ['date', 'time'])
 by_question = df.groupby('question').size()
 
 #The actual chart
