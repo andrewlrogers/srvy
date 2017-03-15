@@ -27,30 +27,40 @@ def get_unique_questions(date):
     for response in sql_query:
         if response[3] not in questions:
             questions.append(response[3])
-    print(questions)
     return(questions)
+
+def query_by_question(question):
+    """Queries the database from a question string"""
+    sql_query = "SELECT * FROM responses where question ='" + str(question) + "'"
+    return(sql_query)
+
+def create_charts_for_all_questions(date):
+    """Creates charts for all unique questions from a given date"""
+    conn = sqlite3.connect(database_file)
+    questions = get_unique_questions(date)
+    count = 1
+    for question in questions:
+        sql_query = query_by_question(question)
+        df = pd.read_sql_query(sql_query, conn)
+        by_question = df.groupby('question').size()
+
+        bar1 = Bar(df, values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
+        output_file('../export/question' + str(count) + '.html')
+        show(bar1)
+        count += 1
+
 
 get_unique_questions('2017-02-26')
 #test query to see all output.
-sql_query = query_by_date('2017-02-26')
-
-#set-up our sql cursor
-conn = sqlite3.connect(database_file)
 
 #Setting up our data frame
 # parse_dates='time' gives a KeyError
-df = pd.read_sql_query(sql_query, conn)
-by_question = df.groupby('question').size()
 
 #The actual chart
-bar1 = Bar(df, values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
 
-donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
+#donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
 
-chron_chart = TimeSeries(df,x = 'time', y = 'opinion', color= 'question', dash='question')
+#chron_chart = TimeSeries(df,x = 'time', y = 'opinion', color= 'question', dash='question')
 #We can change path.
-output_file('../export/hist.html')
 
-
-#we wont need to show the final chart, but good for testing
-show(bar1)
+create_charts_for_all_questions('2017-02-26')
