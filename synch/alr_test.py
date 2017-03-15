@@ -49,18 +49,8 @@ def create_charts_for_all_questions(date):
         show(bar1)
         count += 1
 
-
-get_unique_questions('2017-02-26')
-#test query to see all output.
-
-#Setting up our data frame
-# parse_dates='time' gives a KeyError
-
 #The actual chart
-
 #donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
-
 #chron_chart = TimeSeries(df,x = 'time', y = 'opinion', color= 'question', dash='question')
-#We can change path.
 
 create_charts_for_all_questions('2017-02-26')

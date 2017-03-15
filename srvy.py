@@ -59,7 +59,7 @@ def add_response_to_database(score, question, opinion):
     try:
         c.execute('''INSERT INTO responses (date, time, score, question, opinion) VALUES (?,?,?,?,?)''', (current_date, current_time, score, question, opinion))
         print ("Successfully added response to database.")
-	text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
+        text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
         screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to center of screen
         pygame.display.flip()
