@@ -44,7 +44,7 @@ def create_charts_for_all_questions(date):
         df = pd.read_sql_query(sql_query, conn)
         by_question = df.groupby('question').size()
 
-        bar1 = Bar(df, values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
+        bar1 = Bar(df.sort_values(by='score', ascending = True), values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
         output_file('../export/question' + str(count) + '.html')
         show(bar1)
         count += 1
