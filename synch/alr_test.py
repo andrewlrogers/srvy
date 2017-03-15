@@ -11,20 +11,20 @@ today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 fixed_date = '2017-02-26'
 
-# Use this format to get variables into the query
-# Put a ? in the query, and then do comma (variable1, variable2, ...)
-# Each variable in parentheses corresponds to the ?s in the query
-yesterday_query = "'SELECT * FROM responses WHERE date = '?', (fixed_date,)"
+def query_by_date(date):
+    """Queries the database from a date string in the format YYYY-MM-DD"""
+    sql_query = "SELECT * FROM responses where date ='" + str(date) + "'"
+    return(sql_query)
 
 #test query to see all output.
-all_query = "SELECT * FROM responses"
+sql_query = query_by_date('2017-02-26')
 
 #set-up our sql cursor
 conn = sqlite3.connect('../srvy.db')
 
 #Setting up our data frame
 # parse_dates='time' gives a KeyError
-df = pd.read_sql_query(all_query, conn)
+df = pd.read_sql_query(sql_query, conn)
 by_question = df.groupby('question').size()
 
 #The actual chart
