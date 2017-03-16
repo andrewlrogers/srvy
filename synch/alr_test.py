@@ -59,10 +59,14 @@ def create_charts_for_all_questions(date):
         chart_group.append(bar)
         count += 1
 
+    donut_chart= Donut(df, values = 'score', label = ['opinion', 'question'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',], width= 800, height = 850)
+
     # Create single .html file with all charts
     output_file('../export/' + str(date) + '.html')
-    grid = gridplot(chart_group, ncols = 3, plot_width = 450, responsive = True, toolbar_location = 'left', toolbar_options ='SaveTool')
-    show(grid)
+
+    #set layout and show digest chart
+    grid = gridplot(chart_group, ncols=3, plot_width = 400)
+    show(column(donut_chart,grid))
 
 
 
