@@ -20,7 +20,7 @@ def query_by_date(date):
     return(sql_query)
 
 def get_unique_questions(df):
-    """Creates a list of all unique questions from a given date"""
+    """Creates a list of all unique questions from dataframe query"""
     questions=[]
     for question in df['question']:
         if question not in questions:
