@@ -38,10 +38,10 @@ def create_charts_for_all_questions():
     count = 1
     for q in questions:
         bar = Bar(df.loc[df['question'] == q].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = q + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',] ,plot_height = 900, plot_width = 600)
-        output_file('../export/question' + str(count) + '.html')
         count += 1
         #show(bar)
         chart_group.append(bar)
+    output_file('../export/'+ yesterday + '_digest.html')
     show(row(chart_group))
 
 #The actual chart
