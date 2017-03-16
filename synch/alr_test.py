@@ -3,6 +3,7 @@ import pandas as pd
 import sqlite3
 from datetime import datetime, timedelta
 import string
+import os.path
 
 from bokeh.charts import Bar, Donut, TimeSeries, output_file, show
 
@@ -26,13 +27,19 @@ def get_unique_questions(date):
 
     for question in sql_query:
         questions.append(question)
-        
+
     return(questions)
 
 def query_by_question(question):
     """Queries the database from a question string"""
     sql_query = "SELECT * FROM responses where question ='" + str(question) + "'"
     return(sql_query)
+
+def create_output_directory(date):
+    """Creates output directory for charts, using date for organization"""
+    directory = '../export/' + str(date) + '/'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 def create_charts_for_all_questions(date):
     """Creates charts for all unique questions from a given date"""
@@ -47,9 +54,12 @@ def create_charts_for_all_questions(date):
         by_question = df.groupby('question').size()
 
         bar1 = Bar(df.sort_values(by='score', ascending = True), values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
-        output_file('../export/question' + str(count) + '.html')
+
+        create_output_directory(date)
+        output_file('../export/' + str(date) + '/' + 'question' + str(count) + '.html')
         show(bar1)
         count += 1
+
 
 #The actual chart
 #donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
