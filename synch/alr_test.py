@@ -50,7 +50,6 @@ def create_charts_for_all_questions(date):
     chart_group = []
     count = 1
 
-    create_output_directory(date)
     df = pd.read_sql_query(sql_query, conn)
     for question in questions:
         print("Creating chart for question: " + str(question[0]))
@@ -60,16 +59,11 @@ def create_charts_for_all_questions(date):
         #by_question = df.groupby('question').size()
         #bar1 = Bar(df.sort_values(by='score', ascending = True), values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
 
-        output_file('../export/' + str(date) + '/' + 'question' + str(count) + '_' + str(date) + '.html')
-
         chart_group.append(bar)
         count += 1
 
-        # Create individual .html files for each chart
-        show(row(chart_group))
-
     # Create single .html file with all charts
-    output_file('../export/' + str(date) + '/' + 'all_questions_' + str(date) + '.html')
+    output_file('../export/' + str(date) + '.html')
     show(row(chart_group))
 
 
