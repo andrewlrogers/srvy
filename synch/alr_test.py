@@ -6,7 +6,7 @@ import string
 import os.path
 
 from bokeh.charts import Bar, Donut, TimeSeries, output_file, show
-from bokeh.layouts import row
+from bokeh.layouts import row, column, gridplot
 
 database_file = "../srvy.db"
 
@@ -51,7 +51,7 @@ def create_charts_for_all_questions(date):
     for question in questions:
         print("Creating chart for question: " + str(question))
 
-        bar = Bar(df.loc[df['question'] == question].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = question + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',] ,plot_height = 900, plot_width = 600)
+        bar = Bar(df.loc[df['question'] == question].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = question + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',])
 
         #by_question = df.groupby('question').size()
         #bar1 = Bar(df.sort_values(by='score', ascending = True), values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
@@ -61,7 +61,8 @@ def create_charts_for_all_questions(date):
 
     # Create single .html file with all charts
     output_file('../export/' + str(date) + '.html')
-    show(row(chart_group))
+    grid = gridplot(chart_group, ncols = 3, plot_width = 450, responsive = True, toolbar_location = 'left', toolbar_options ='SaveTool')
+    show(grid)
 
 
 

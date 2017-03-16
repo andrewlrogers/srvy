@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import string
 
 from bokeh.charts import Bar, Donut, TimeSeries, output_file, show
-from bokeh.layouts import row
+from bokeh.layouts import row, gridplot, column
 
 """time variables"""
 fixed_date = '2017-02-26'
@@ -33,16 +33,17 @@ def create_charts_for_all_questions(date):
     questions = get_unique_questions(df)
     chart_group = []
     for q in questions:
-        individual_question_bar = Bar(df.loc[df['question'] == q].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = q + ' ' + yesterday, ylabel = 'Number of Responses', xlabel=' ', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',])
+        individual_question_bar = Bar(df.loc[df['question'] == q].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = q + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', width = 300, bar_width = .5, legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',])
         chart_group.append(individual_question_bar)
 
-    all_questions = Bar(df, values = 'score', label = 'question', stack = 'opinion', title= 'All questions ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend = 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',])
+    all_questions = Bar(df.sort_values(by='score', ascending= True), values = 'score', stack = 'opinion', label = 'question', title= 'All questions ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend = 'bottom_left', width = 300, bar_width = .5, palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',])
     chart_group.append(all_questions)
 
-    donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
-    chart_group.append(donut_chart)
+    donut_chart= Donut(df, values = 'score', label = ['opinion', 'question'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', height = 800, width= 800)
+    #chart_group.append(donut_chart)
     output_file('../export/'+ date + '_digest.html')
-    show(row(chart_group))
+    grid = gridplot(chart_group, ncols=3, plot_width = 400)
+    show(column(donut_chart,grid))
 
 #The actual chart
 #donut_chart= Donut(df, values = 'score', label = ['opinion'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count',)
