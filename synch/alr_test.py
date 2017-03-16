@@ -50,7 +50,6 @@ def create_charts_for_all_questions(date):
     chart_group = []
     count = 1
 
-    create_output_directory(date)
     df = pd.read_sql_query(sql_query, conn)
     for question in questions:
         print("Creating chart for question: " + str(question[0]))
@@ -64,7 +63,7 @@ def create_charts_for_all_questions(date):
         count += 1
 
     # Create single .html file with all charts
-    output_file('../export/' + str(date) + '/' + 'all_questions_' + str(date) + '.html')
+    output_file('../export/' + str(date) + '.html')
     show(row(chart_group))
 
 
