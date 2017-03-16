@@ -22,11 +22,12 @@ def get_unique_questions(date):
     questions = []
     conn = sqlite3.connect(database_file)
     c = conn.cursor()
-    sql_query = c.execute(query_by_date(date))
+    sql_query = c.execute("SELECT DISTINCT question FROM responses where date ='" + str(date) + "'")
 
     for response in sql_query:
-        if response[3] not in questions:
-            questions.append(response[3])
+        if response not in questions:
+            questions.append(response)
+
     return(questions)
 
 def query_by_question(question):
@@ -39,8 +40,10 @@ def create_charts_for_all_questions(date):
     conn = sqlite3.connect(database_file)
     questions = get_unique_questions(date)
     count = 1
+
     for question in questions:
-        sql_query = query_by_question(question)
+        sql_query = query_by_question(question[0])
+        print("Creating chart for question: " + str(question[0]))
         df = pd.read_sql_query(sql_query, conn)
         by_question = df.groupby('question').size()
 
