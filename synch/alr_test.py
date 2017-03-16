@@ -24,10 +24,9 @@ def get_unique_questions(date):
     c = conn.cursor()
     sql_query = c.execute("SELECT DISTINCT question FROM responses where date ='" + str(date) + "'")
 
-    for response in sql_query:
-        if response not in questions:
-            questions.append(response)
-
+    for question in sql_query:
+        questions.append(question)
+        
     return(questions)
 
 def query_by_question(question):
