@@ -19,16 +19,12 @@ def query_by_date(date):
     sql_query = "SELECT * FROM responses where date ='" + str(date) + "'"
     return(sql_query)
 
-def get_unique_questions(date):
-    """Creates a list of all unique questions from a given date"""
-    questions = []
-    conn = sqlite3.connect(database_file)
-    c = conn.cursor()
-    sql_query = c.execute("SELECT DISTINCT question FROM responses where date ='" + str(date) + "'")
-
-    for question in sql_query:
-        questions.append(question)
-
+def get_unique_questions(df):
+    """Creates a list of all unique questions from dataframe query"""
+    questions=[]
+    for question in df['question']:
+        if question not in questions:
+            questions.append(question)
     return(questions)
 
 def query_by_question(question):
@@ -46,15 +42,16 @@ def create_charts_for_all_questions(date):
     """Creates charts for all unique questions from a given date"""
     conn = sqlite3.connect(database_file)
     sql_query = query_by_date(date)
-    questions = get_unique_questions(date)
+    df = pd.read_sql_query(sql_query, conn)
+    questions = get_unique_questions(df)
+
     chart_group = []
     count = 1
 
-    df = pd.read_sql_query(sql_query, conn)
     for question in questions:
-        print("Creating chart for question: " + str(question[0]))
+        print("Creating chart for question: " + str(question))
 
-        bar = Bar(df.loc[df['question'] == question[0]].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = question[0] + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',] ,plot_height = 900, plot_width = 600)
+        bar = Bar(df.loc[df['question'] == question].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = question + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',] ,plot_height = 900, plot_width = 600)
 
         #by_question = df.groupby('question').size()
         #bar1 = Bar(df.sort_values(by='score', ascending = True), values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
