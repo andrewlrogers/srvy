@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import string
 import os.path
 
-from bokeh.charts import Bar, Donut, TimeSeries, output_file, show
+from bokeh.charts import Bar, Donut, TimeSeries, Line, output_file, show
 from bokeh.layouts import row, column, gridplot
 
 database_file = "../srvy.db"
@@ -52,21 +52,19 @@ def create_charts_for_all_questions(date):
         print("Creating chart for question: " + str(question))
 
         bar = Bar(df.loc[df['question'] == question].sort_values(by='score', ascending = False), values = 'score', label = 'question', stack = 'opinion', title = question + ' ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',])
-
-        #by_question = df.groupby('question').size()
         #bar1 = Bar(df.sort_values(by='score', ascending = True), values = 'score', label = 'question', stack =  'opinion', title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', legend= 'bottom_left', palette= ['#084594', '#2171b5', '#4292c6', '#6baed6', '#9ecae1', '#c6dbef', '#deebf7', '#f7fbff'] ,plot_height = 900, plot_width = 900)
-
         chart_group.append(bar)
-        count += 1
 
     donut_chart= Donut(df, values = 'score', label = ['opinion', 'question'], title = 'Opinon distibution from ' + yesterday, ylabel = 'Number of Responses', agg = 'count', palette= ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc',], width= 800, height = 850)
+
+    time_line = TimeSeries(df, x = 'time', y = 'question', builder_type = 'point', color = 'opinion', marker = 'opinion')
 
     # Create single .html file with all charts
     output_file('../export/' + str(date) + '.html')
 
     #set layout and show digest chart
     grid = gridplot(chart_group, ncols=3, plot_width = 400)
-    show(column(donut_chart,grid))
+    show(column( time_line ,grid))
 
 
 
