@@ -30,3 +30,4 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 ##Resources
 [Likert Scale](https://en.wikipedia.org/wiki/Likert_scale)
+[The Participatory Museum](http://www.participatorymuseum.org/)

@@ -81,13 +81,8 @@ def main():
     pygame.display.flip()
 
     while True:
-        if love.is_pressed:
-            score = 2
-            opinion = 'Really Like'
-            sleep(.5)
-            add_response_to_database(score, qs, opinion)
 
-        elif like.is_pressed:
+        if like.is_pressed:
             score = 1
             sleep(.5)
             opinion = 'Like'
@@ -99,11 +94,6 @@ def main():
             opinion = 'Dislike'
             add_response_to_database(score, qs, opinion)
 
-        elif hate.is_pressed:
-            score = -2
-            sleep(.5)
-            opinion = 'Strong Dislike'
-            add_response_to_database(score, qs, opinion)
 
 
 question = pull_qs_from_csv()
