@@ -1,4 +1,7 @@
 #!/usr/bin/python
+
+""" Downloads questions from dropbox to be integrated into srvy """
+
 import dropbox
 
 access_token = "I4gEG90KcJAAAAAAAAACORywbA7QoPUArtQGf0TstZFTmkIsDTrLksBSIGBHKD8I"
