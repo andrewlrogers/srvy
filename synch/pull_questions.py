@@ -6,7 +6,7 @@
 import dropbox
 import pathlib
 import re
-import datetime
+from datetime import datetime, timedelta
 
 
 """ S E T U P _ V A R I A B L E S """
@@ -30,14 +30,13 @@ def download_questions():
 """ U P L O A D I N G _ FUNCTIONS"""
 
 # the source files to upload
-chart_to_upload= yesterday + ".html","srvy"
+chart_to_upload= yesterday + ".html"
 csv_to_upload = yesterday + ".csv"
-files_to_upload = chart_to_upload, csv_to_upload
+files_to_upload = (chart_to_upload, csv_to_upload)
 
-def foopa(files_to_upload):
-    folder = pathlib.Path("/home/pi/srvy/export/")    # located in this folder
+def foopa(files_to_upload): #need to change this function name
     for f in files_to_upload:
-        filepath = folder + f
+        filepath = pathlib.Path("/home/pi/srvy/export/" + f)  
         upload_files(filepath, f)
 
 def upload_files(filepath, filename):
@@ -51,4 +50,4 @@ def upload_files(filepath, filename):
 
 """ M A I N """
 download_questions()
-foopa(files_upload)
+foopa(files_to_upload)
