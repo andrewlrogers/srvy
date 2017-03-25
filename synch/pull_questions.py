@@ -37,11 +37,13 @@ files_to_upload = (chart_to_upload, csv_to_upload)
 def foopa(files_to_upload): #need to change this function name
     for f in files_to_upload:
         filepath = pathlib.Path("/home/pi/srvy/export/" + f)  
+        print(f, filepath)
         upload_files(filepath, f)
+        print('passed ' + f)
 
 def upload_files(filepath, filename):
     # open the file and upload it
-    target = "responses/"
+    target = "/"
     with filepath.open("rb") as f:
         # upload gives you metadata about the file
         # we want to overwite any previous version of the file
@@ -51,3 +53,4 @@ def upload_files(filepath, filename):
 """ M A I N """
 download_questions()
 foopa(files_to_upload)
+#upload_files(pathlib.Path("/home/pi/srvy/export/srvy2017-02-18.csv"), "srvy2017-02-18.csv")
