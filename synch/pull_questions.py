@@ -36,10 +36,14 @@ files_to_upload = (chart_to_upload, csv_to_upload)
 
 def foopa(files_to_upload): #need to change this function name
     for f in files_to_upload:
-        filepath = pathlib.Path("/home/pi/srvy/export/" + f)  
-        print(f, filepath)
-        upload_files(filepath, f)
-        print('passed ' + f)
+        try:
+            filepath = pathlib.Path("/home/pi/srvy/export/" + f)  
+            print(f, filepath)
+            upload_files(filepath, f)
+            print('passed ' + f)
+        except IOError:
+            print('No such file')
+
 
 def upload_files(filepath, filename):
     # open the file and upload it
@@ -47,8 +51,12 @@ def upload_files(filepath, filename):
     with filepath.open("rb") as f:
         # upload gives you metadata about the file
         # we want to overwite any previous version of the file
-        targetfile = target + filename
-        meta = dbx.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
+	try:
+            targetfile = target + filename
+            meta = dbx.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
+        except IOError:
+	    print('No such file')
+
 
 """ M A I N """
 download_questions()
