@@ -59,7 +59,7 @@ def add_random_questions_to_database():
 
         sqlite_file = 'srvy.db'
         table_name = 'responses'
-        time_column = 'time'
+        time_column = 'pythonDateTime'
         unix_time_column = 'unixTime'
         question_column = 'question'
         opinion_column = 'opinion'
@@ -69,7 +69,7 @@ def add_random_questions_to_database():
 
         for response in daily_responses:
             try:
-                c.execute('''INSERT INTO responses (time, unixTime, question, opinion) VALUES (?,?,?,?)''', (response[0], response[1], response[2], response[3]))
+                c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''', (response[0], response[1], response[2], response[3]))
                 print ("Successfully added response to database.")
             except Exception as e:
                 print(e)
