@@ -7,7 +7,7 @@ import sqlite3
 from random import randint
 
 
-start_date = date(2014, 1, 1)
+start_date = date(2016, 11, 1)
 end_date = datetime.now()
 date_range = pd.date_range(start_date, end_date)
 
