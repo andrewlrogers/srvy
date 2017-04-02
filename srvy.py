@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from gpiozero import Button
+import time
 from time import sleep
 from datetime import datetime
 import random
@@ -44,8 +45,8 @@ def add_response_to_database(score, question, opinion):
 
     sqlite_file = 'srvy.db'
     table_name = 'responses'
-    date_column = 'date'
     time_column = 'time'
+    unix_time_column = 'unixTime'
     score_column = 'score'
     question_column = 'question'
     opinion_column = 'opinion'
@@ -53,11 +54,12 @@ def add_response_to_database(score, question, opinion):
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
 
-    current_date = datetime.now().strftime('%Y-%m-%d')
-    current_time = datetime.now().strftime('%H:%M:%S')
+    current_date = datetime.now()
+    current_unix_time = time.clock()
+
 
     try:
-        c.execute('''INSERT INTO responses (date, time, score, question, opinion) VALUES (?,?,?,?,?)''', (current_date, current_time, score, question, opinion))
+        c.execute('''INSERT INTO responses (time, unixTime, question, opinion) VALUES (?,?,?,?)''', (current_date, current_unix_time, question, opinion))
         print ("Successfully added response to database.")
         text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
