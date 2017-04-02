@@ -37,7 +37,7 @@ def add_random_questions_to_database():
             if random_number_of_responses == 0:
                 continue
             else:
-                random_hour = randint(10, 17) # Random hour between 10 AM and 5 PM
+                random_hour = randint(10, 16) # Random hour between 10 AM and 5 PM
                 random_minute = randint(0, 59)
                 random_second = randint(0, 59)
                 response_date = datetime(date.year, date.month, date.day, random_hour, random_minute, random_second)
