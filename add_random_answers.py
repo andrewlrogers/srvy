@@ -58,13 +58,12 @@ def add_random_questions_to_database():
             response_date = datetime(date.year, date.month, date.day, random_hour, random_minute, random_second)
             unix_response_date = time.mktime(response_date.timetuple())
             random_question = create_random_question()
-            random_score = randint(0, 1)
-            opinion = "Yes"
+            random_opinion = randint(0, 1)
 
-            if random_score == 0:
-                opinion = "No"
+            if random_opinion == 0:
+                random_opinion = -1
 
-            all_random_questions = (response_date, unix_response_date, random_question, random_score)
+            all_random_questions = (response_date, unix_response_date, random_question, random_opinion)
             daily_responses.append(all_random_questions)
             count += 1
 
