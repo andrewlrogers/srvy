@@ -29,34 +29,36 @@ def add_random_questions_to_database():
 
     for date in date_range:
         daily_responses = []
-        random_number_of_responses = list(range(10))
-        random.shuffle(random_number_of_responses)
+        random_number_of_responses = randint(0, 10)
 
+        # Don't add responses on a random number of days
+        if random_number_of_responses == 0:
+            continue
+
+        count = 0
         # Create a random number of responses per day
-        for response in random_number_of_responses:
-            if random_number_of_responses == 0:
-                continue
-            else:
-                random_hour = randint(10, 16) # Random hour between 10 AM and 5 PM
-                random_minute = randint(0, 59)
-                random_second = randint(0, 59)
-                response_date = datetime(date.year, date.month, date.day, random_hour, random_minute, random_second)
-                unix_response_date = time.mktime(response_date.timetuple())
-                random_question = create_random_question()
-                random_score = randint(0, 1)
-                opinion = "Yes"
+        while count <= random_number_of_responses:
+            random_hour = randint(10, 16) # Random hour between 10 AM and 5 PM
+            random_minute = randint(0, 59)
+            random_second = randint(0, 59)
+            response_date = datetime(date.year, date.month, date.day, random_hour, random_minute, random_second)
+            unix_response_date = time.mktime(response_date.timetuple())
+            random_question = create_random_question()
+            random_score = randint(0, 1)
+            opinion = "Yes"
 
-                if random_score == 0:
-                    opinion = "No"
+            if random_score == 0:
+                opinion = "No"
 
-                all_random_questions = (response_date, unix_response_date, random_question, random_score)
-                daily_responses.append(all_random_questions)
+            all_random_questions = (response_date, unix_response_date, random_question, random_score)
+            daily_responses.append(all_random_questions)
+            count += 1
 
         # Sort random daily responses by time "entered"
         daily_responses = sorted(daily_responses)
+        count = 0
 
         # Add to database
-
         sqlite_file = 'srvy.db'
         table_name = 'responses'
         time_column = 'pythonDateTime'
