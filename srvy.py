@@ -29,8 +29,8 @@ dislike = Button(15)
 hate = Button(17)
 
 def pull_qs_from_csv(): #reads the questions into mem from csv in case they have been updated.
-    with open('synch/questions.csv', 'rU') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',', quotechar='|')
+    with open('synch/questions.csv', 'rU') as csv_file:
+        readCSV = csv.reader(csv_file, delimiter=',', quotechar='|')
         question=[]
         for row in readCSV:
             q = row[0]
@@ -40,14 +40,10 @@ def pull_qs_from_csv(): #reads the questions into mem from csv in case they have
 def random_questions(): #pulls returns a random question into main loop.
     return random.choice(question)
 
-def add_response_to_database(score, question, opinion):
+def add_response_to_database(question, opinion):
     """Add response to SQLite 3 database"""
 
     sqlite_file = 'srvy.db'
-    table_name = 'responses'
-    time_column = 'time'
-    unix_time_column = 'unixTime'
-    score_column = 'score'
     question_column = 'question'
     opinion_column = 'opinion'
 
@@ -59,7 +55,7 @@ def add_response_to_database(score, question, opinion):
 
 
     try:
-        c.execute('''INSERT INTO responses (time, unixTime, question, opinion) VALUES (?,?,?,?)''', (current_date, current_unix_time, question, opinion))
+        c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''', (current_date, current_unix_time, question, opinion))
         print ("Successfully added response to database.")
         text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
@@ -85,16 +81,14 @@ def main():
     while True:
 
         if like.is_pressed:
-            score = 1
             sleep(.5)
-            opinion = 'Like'
-            add_response_to_database(score, qs, opinion)
+            opinion = 1
+            add_response_to_database(qs, opinion)
 
         elif dislike.is_pressed:
-            score = -1
             sleep(.5)
-            opinion = 'Dislike'
-            add_response_to_database(score, qs, opinion)
+            opinion = -1
+            add_response_to_database(qs, opinion)
 
 
 
