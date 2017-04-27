@@ -7,6 +7,7 @@ import random
 import sqlite3
 import pygame
 import csv
+from synch import config
 
 
 #Pygame Setup
@@ -16,7 +17,7 @@ screen_width=800 #Set width and height to match your monitor.
 screen_height=480
 bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)] #crocker colors
 
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
+screen = pygame.display.set_mode((config.screen_width, config.screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
 pygame.mouse.set_visible(False) # Hides the mouse cursor
 
 font = pygame.font.SysFont("Futura, Helvetica, Arial", 48) #system fonts and size
@@ -59,7 +60,7 @@ def add_response_to_database(question, opinion):
         print ("Successfully added response to database.")
         text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
         screen.fill((105, 58, 119)) #sets background color
-        screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to center of screen
+        screen.blit(text, (config.screen_width/2 - text.get_rect().width/2, config.screen_height/2)) #adds text to center of screen
         pygame.display.flip()
         sleep(2) #gives viewer a chance to read
     except Exception as e:
@@ -75,7 +76,7 @@ def main():
     print(qs)
     text = font.render(qs, True, (255, 255, 255)) #displays text, anti-aliasing  and sets text color
     screen.fill(random.choice(bg_color)) #sets background color
-    screen.blit(text, (screen_width/2 - text.get_rect().width/2,screen_height/2)) #adds text to screen and centers
+    screen.blit(text, (config.screen_width/2 - text.get_rect().width/2, config.screen_height/2)) #adds text to screen and centers
     pygame.display.flip()
 
     while True:

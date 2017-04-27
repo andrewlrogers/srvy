@@ -7,20 +7,21 @@ import dropbox
 import pathlib
 import re
 from datetime import datetime, timedelta
+import config
 
 
 """ S E T U P _ V A R I A B L E S """
 
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
-#You will need to generate your own access token for dropbox
-access_token = "I4gEG90KcJAAAAAAAAACORywbA7QoPUArtQGf0TstZFTmkIsDTrLksBSIGBHKD8I"
+
 #Creates a dropbox object
-dbx = dropbox.Dropbox(access_token)
+dbx = dropbox.Dropbox(config.dbx_access_token)
 
 """ D O W N L O A D I N G _ FUNCTIONS """
 
 def download_questions():
+    """downloads csv from dropbox and overwrites locally"""
     local = '/home/pi/srvy/synch/questions.csv'#The folder/file locally that we want the files to download to.
     with open (local, 'w') as f:
         metadata, res = dbx.files_download('/questions.csv')
@@ -37,7 +38,7 @@ files_to_upload = (chart_to_upload, csv_to_upload)
 def foopa(files_to_upload): #need to change this function name
     for f in files_to_upload:
         try:
-            filepath = pathlib.Path("/home/pi/srvy/export/" + f)  
+            filepath = pathlib.Path("/home/pi/srvy/export/" + f)
             print(f, filepath)
             upload_files(filepath, f)
             print('passed ' + f)
@@ -51,11 +52,11 @@ def upload_files(filepath, filename):
     with filepath.open("rb") as f:
         # upload gives you metadata about the file
         # we want to overwite any previous version of the file
-	try:
+        try:
             targetfile = target + filename
             meta = dbx.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
         except IOError:
-	    print('No such file')
+            print('No such file')
 
 
 """ M A I N """
