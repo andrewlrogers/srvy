@@ -1,9 +1,9 @@
 # SRVY
-##A Physical Like/Dislike Questionnaire for Non-Profits
+## A Physical Like/Dislike Questionnaire for Non-Profits
 ===
 ---
 
-##Overview / Functionality
+## Overview / Functionality
 SRVY uses a screen to pose a visitor a question and then records their response using two physical buttons that correspond to two different values (Like, Dislike). The response is recorded in a SQLite3 database. On a daily basis SRVY generates a series of charts and reports which are automatically uploaded to a Dropbox application. Questions can be appended on a daily basis by editing a .CSV file also located in the Dropbox account.
 
 The intended audience is smaller art non-profits such as museums, theaters, and community art centers. The goal is to provide a low-cost and customizable tool that will allow organizations to track audience engagement and determine metrics of success with little daily upkeep.
@@ -31,14 +31,24 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 
 ## Requirements
-###Hardware
-###Packages
+### Hardware
+### Packages
 
-##Installation
+## Installation
 
-###Customization
+### Dropbox
+1. Create a file named dropbox.config and save it to the home directory of srvy
+2. Add the following lines to dropbox.config:
+'''
+[dropbox]
+token = "INSERT YOUR PRIVATE DROPBOX TOKEN HERE"
+'''
+and paste your private Dropbox token between the quotes.
 
-###Possible Future Functionality
+
+### Customization
+
+### Possible Future Functionality
 
 - Add support for C.H.I.P computer instead of Raspberry Pi
 - Add support for Google Drive instead of Dropbox
@@ -46,6 +56,6 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 
 
-##Resources
+## Resources
 
 [The Participatory Museum](http://www.participatorymuseum.org/)
