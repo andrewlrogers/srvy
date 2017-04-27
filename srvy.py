@@ -14,7 +14,6 @@ parser = ConfigParser()
 parser.read('srvy.config', encoding='utf-8')
 screen_width = parser.get('screen', 'width')
 screen_height = parser.get('screen', 'height')
-print(dropbox_token)
 
 #Pygame Setup
 pygame.init()

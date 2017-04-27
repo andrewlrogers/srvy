@@ -7,8 +7,12 @@ import dropbox
 import pathlib
 import re
 from datetime import datetime, timedelta
-import config
+from configparser import ConfigParser
 
+# Configuration
+parser = ConfigParser()
+parser.read('srvy.config', encoding='utf-8')
+dropbox_token = parser.get('dropbox', 'token')
 
 """ S E T U P _ V A R I A B L E S """
 
@@ -16,7 +20,7 @@ today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
 #Creates a dropbox object
-dbx = dropbox.Dropbox(config.dbx_access_token)
+dbx = dropbox.Dropbox(dropbox_token)
 
 """ D O W N L O A D I N G _ FUNCTIONS """
 
