@@ -37,8 +37,8 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 ## Installation
 
 ### Dropbox
-1. Create a file named dropbox.config and save it to the home directory of srvy
-2. Add the following lines to dropbox.config:
+1. Create a file named **dropbox.config** and save it to the home directory of srvy
+2. Add the following lines to **dropbox.config**, pasting your private Dropbox token between the quotes:
 
 ```
 #!config
@@ -46,8 +46,6 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 [dropbox]
 token = "INSERT YOUR PRIVATE DROPBOX TOKEN HERE"
 ```
-
-and paste your private Dropbox token between the quotes.
 
 ### Customization
 
