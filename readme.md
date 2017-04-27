@@ -38,13 +38,13 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 ### Dropbox
 1. Create an empty file named **dropbox.config** in the home directory of srvy
-2. Add the following lines to **dropbox.config**, pasting your private Dropbox token between the quotes:
+2. Add the following lines to **dropbox.config**, pasting your private Dropbox token where it says INSERT YOUR PRIVATE DROPBOX TOKEN HERE
 
 ```
 #!config
 
 [dropbox]
-token = "INSERT YOUR PRIVATE DROPBOX TOKEN HERE"
+token = INSERT YOUR PRIVATE DROPBOX TOKEN HERE
 ```
 
 ### Customization
