@@ -89,4 +89,14 @@ def main():
         if like.is_pressed:
             sleep(.5)
             opinion = 1
-            main()
+           add_response_to_database(qs, opinion)
+
+        elif dislike.is_pressed:
+            sleep(.5)
+            opinion = -1
+            add_response_to_database(qs, opinion)
+
+
+
+question = pull_qs_from_csv()
+main()
