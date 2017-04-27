@@ -92,3 +92,6 @@ tags
 .pyc
 *flymake.py
 export/
+
+# Config files
+dropbox.config

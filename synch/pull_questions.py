@@ -9,9 +9,9 @@ import re
 from datetime import datetime, timedelta
 from configparser import ConfigParser
 
-# Configuration
+# Dropbox Configuration
 parser = ConfigParser()
-parser.read('srvy.config', encoding='utf-8')
+parser.read('dropbox.config', encoding='utf-8')
 dropbox_token = parser.get('dropbox', 'token')
 
 """ S E T U P _ V A R I A B L E S """
