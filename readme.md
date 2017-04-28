@@ -40,7 +40,7 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 ### Dropbox
 1. Open **srvy.config** in a text editor.
-2. Find the section labeled **[dropbox]** (see below). Insert your private Dropbox token.
+2. Find the the [dropbox] section:
 
 ```
 #!config
@@ -48,6 +48,8 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 [dropbox]
 token = INSERT_YOUR_PRIVATE_DROPBOX_TOKEN_HERE
 ```
+3. Replace INSERT_YOUR_PRIVATE_DROPBOX_TOKEN_HERE with your private Dropbox token.
+4. Save **srvy.config**
 
 ### Customization
 
