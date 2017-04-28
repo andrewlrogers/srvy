@@ -1,3 +1,6 @@
+[dropbox]
+token = INSERT_DROPBOX_TOKEN_HERE
+
 [screen]
 screen_width = 800
 screen_height = 480
