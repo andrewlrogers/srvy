@@ -43,7 +43,7 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 2. Find the the [dropbox] section:
 
     ```
-    #!config
+        #!config
 
 
         [dropbox]
