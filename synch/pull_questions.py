@@ -11,7 +11,7 @@ from configparser import ConfigParser
 
 # Dropbox Configuration
 parser = ConfigParser()
-parser.read('../dropbox.config')
+parser.read('../srvy.config')
 dropbox_token = parser.get('dropbox', 'token')
 
 """ S E T U P _ V A R I A B L E S """
