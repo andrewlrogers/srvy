@@ -43,9 +43,9 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 2. Find the [dropbox] section:
 
             [dropbox]
-            token = INSERT_YOUR_PRIVATE_DROPBOX_TOKEN_HERE
+            token = INSERT_DROPBOX_TOKEN_HERE
 
-3. Replace INSERT_YOUR_PRIVATE_DROPBOX_TOKEN_HERE with your private Dropbox token.
+3. Replace INSERT_DROPBOX_TOKEN_HERE with your private Dropbox token.
 4. Save **srvy.config**
 
 ### Customization
