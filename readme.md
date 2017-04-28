@@ -36,11 +36,11 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 ## Installation
 ### Config file
-1. Find the file **srvy.config.example**. Rename it to **srvy.config**
+1. Find the file **srvy.config.example**. Rename it **srvy.config**.
 
 ### Dropbox
 1. Open **srvy.config** in a text editor.
-2. Find the section below, and insert your private Dropbox token:
+2. Find the section labeled **[dropbox]** (see below). Insert your private Dropbox token.
 
 ```
 #!config
