@@ -42,9 +42,7 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 1. Open **srvy.config** in a text editor.
 2. Find the the [dropbox] section:
 
-    ```
-    #!config
-
+    ```config
     [dropbox]
     token = INSERT_YOUR_PRIVATE_DROPBOX_TOKEN_HERE
     ```
