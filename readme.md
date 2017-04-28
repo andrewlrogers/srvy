@@ -44,7 +44,7 @@ The intended audience is smaller art non-profits such as museums, theaters, and 
 
 
 ```
-    #!config
+#!config
 
     [dropbox]
     token = INSERT_YOUR_PRIVATE_DROPBOX_TOKEN_HERE
