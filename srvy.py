@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sys
 try:
     from gpiozero import Button
 except ImportError:
@@ -19,6 +20,12 @@ except ImportError:
 
 import csv
 from configparser import ConfigParser
+
+def module_installed(module):
+    if module in sys.modules:
+        return True
+    else:
+        return False
 
 # Configuration
 parser = ConfigParser()
