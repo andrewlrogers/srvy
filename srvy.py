@@ -1,11 +1,22 @@
 #!/usr/bin/python
-from gpiozero import Button
+try:
+    from gpiozero import Button
+except ImportError:
+    print("gpiozero is not installed.")
+    pass
+
 import time
 from time import sleep
 from datetime import datetime
 import random
 import sqlite3
-import pygame
+
+try:
+    import pygame
+except ImportError:
+    print("pygame is not installed.")
+    pass
+
 import csv
 from configparser import ConfigParser
 
@@ -15,36 +26,39 @@ parser.read('srvy.config', encoding='utf-8')
 screen_width = parser.get('screen', 'width')
 screen_height = parser.get('screen', 'height')
 
-#Pygame Setup
+# Pygame Setup
 pygame.init()
 
-screen_width=800 #Set width and height to match your monitor.
-screen_height=480
-bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)] #crocker colors
+screen_width = 800  # Set width and height to match your monitor.
+screen_height = 480
+bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90, 92)]  # crocker colors
 
-screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
-pygame.mouse.set_visible(False) # Hides the mouse cursor
+screen = pygame.display.set_mode((screen_width, screen_height),
+                                 pygame.FULLSCREEN)  # remove pygame.FULLSCREEN for windowed mode
+pygame.mouse.set_visible(False)  # Hides the mouse cursor
 
-font = pygame.font.SysFont("Futura, Helvetica, Arial", 48) #system fonts and size
+font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)  # system fonts and size
 
-
-#Button Setup
+# Button Setup
 love = Button(18)
 like = Button(14)
 dislike = Button(15)
 hate = Button(17)
 
-def pull_qs_from_csv(): #reads the questions into mem from csv in case they have been updated.
+
+def pull_qs_from_csv():  # reads the questions into mem from csv in case they have been updated.
     with open('synch/questions.csv', 'rU') as csv_file:
         readCSV = csv.reader(csv_file, delimiter=',', quotechar='|')
-        question=[]
+        question = []
         for row in readCSV:
             q = row[0]
             question.append(q)
         return question
 
-def random_questions(): #pulls returns a random question into main loop.
+
+def random_questions():  # pulls returns a random question into main loop.
     return random.choice(question)
+
 
 def add_response_to_database(question, opinion):
     """Add response to SQLite 3 database"""
@@ -59,15 +73,16 @@ def add_response_to_database(question, opinion):
     current_date = datetime.now()
     current_unix_time = time.clock()
 
-
     try:
-        c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''', (current_date, current_unix_time, question, opinion))
-        print ("Successfully added response to database.")
-        text = font.render('Thank You!', True, (255, 255, 255)) #text to display and color in tuple
-        screen.fill((105, 58, 119)) #sets background color
-        screen.blit(text, (screen_width/2 - text.get_rect().width/2, screen_height/2)) #adds text to center of screen
+        c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''',
+                  (current_date, current_unix_time, question, opinion))
+        print("Successfully added response to database.")
+        text = font.render('Thank You!', True, (255, 255, 255))  # text to display and color in tuple
+        screen.fill((105, 58, 119))  # sets background color
+        screen.blit(text,
+                    (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to center of screen
         pygame.display.flip()
-        sleep(2) #gives viewer a chance to read
+        sleep(2)  # gives viewer a chance to read
     except Exception as e:
         print(e)
 
@@ -76,25 +91,30 @@ def add_response_to_database(question, opinion):
 
     main()
 
+
 def main():
-    qs = random_questions() #calls questions function that returns random question.
+    qs = random_questions()  # calls questions function that returns random question.
     print(qs)
-    text = font.render(qs, True, (255, 255, 255)) #displays text, anti-aliasing  and sets text color
-    screen.fill(random.choice(bg_color)) #sets background color
-    screen.blit(text, (screen_width/2 - text.get_rect().width/2, screen_height/2)) #adds text to screen and centers
+    text = font.render(qs, True, (255, 255, 255))  # displays text, anti-aliasing  and sets text color
+    screen.fill(random.choice(bg_color))  # sets background color
+    screen.blit(text,
+                (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to screen and centers
     pygame.display.flip()
 
     while True:
 
-        if like.is_pressed:
+        opinion = input("Opinion: ")
+
+        if like.is_pressed or opinion == 1:
             sleep(.5)
             opinion = 1
             add_response_to_database(qs, opinion)
 
-        elif dislike.is_pressed:
+        elif dislike.is_pressed or opinion == -1:
             sleep(.5)
             opinion = -1
             add_response_to_database(qs, opinion)
+
 
 question = pull_qs_from_csv()
 main()
