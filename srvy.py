@@ -33,25 +33,28 @@ parser.read('srvy.config', encoding='utf-8')
 screen_width = parser.get('screen', 'width')
 screen_height = parser.get('screen', 'height')
 
+if module_installed('pygame'):
 # Pygame Setup
-pygame.init()
+    pygame.init()
 
-screen_width = 800  # Set width and height to match your monitor.
-screen_height = 480
-bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90, 92)]  # crocker colors
+    screen_width = 800  # Set width and height to match your monitor.
+    screen_height = 480
+    bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90, 92)]  # crocker colors
 
-screen = pygame.display.set_mode((screen_width, screen_height),
-                                 pygame.FULLSCREEN)  # remove pygame.FULLSCREEN for windowed mode
-pygame.mouse.set_visible(False)  # Hides the mouse cursor
+    screen = pygame.display.set_mode((screen_width, screen_height),
+                                     pygame.FULLSCREEN)  # remove pygame.FULLSCREEN for windowed mode
+    pygame.mouse.set_visible(False)  # Hides the mouse cursor
 
-font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)  # system fonts and size
+    font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)  # system fonts and size
 
-# Button Setup
-love = Button(18)
-like = Button(14)
-dislike = Button(15)
-hate = Button(17)
+    # Button Setup
+    love = Button(18)
+    like = Button(14)
+    dislike = Button(15)
+    hate = Button(17)
 
+else:
+    pass
 
 def pull_qs_from_csv():  # reads the questions into mem from csv in case they have been updated.
     with open('synch/questions.csv', 'rU') as csv_file:
@@ -102,25 +105,44 @@ def add_response_to_database(question, opinion):
 def main():
     qs = random_questions()  # calls questions function that returns random question.
     print(qs)
-    text = font.render(qs, True, (255, 255, 255))  # displays text, anti-aliasing  and sets text color
-    screen.fill(random.choice(bg_color))  # sets background color
-    screen.blit(text,
-                (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to screen and centers
-    pygame.display.flip()
+
+    pygame_installed = module_installed('pygame')
+
+    if pygame_installed:
+        text = font.render(qs, True, (255, 255, 255))  # displays text, anti-aliasing  and sets text color
+        screen.fill(random.choice(bg_color))  # sets background color
+        screen.blit(text,
+                    (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to screen and centers
+        pygame.display.flip()
+    else:
+        pass
 
     while True:
 
         opinion = input("Opinion: ")
 
-        if like.is_pressed or opinion == 1:
-            sleep(.5)
-            opinion = 1
-            add_response_to_database(qs, opinion)
+        if pygame_installed:
+            if like.is_pressed:
+                sleep(.5)
+                opinion = 1
+                add_response_to_database(qs, opinion)
 
-        elif dislike.is_pressed or opinion == -1:
-            sleep(.5)
-            opinion = -1
-            add_response_to_database(qs, opinion)
+            elif dislike.is_pressed or opinion == -1:
+                sleep(.5)
+                opinion = -1
+                add_response_to_database(qs, opinion)
+
+        else:
+
+            if opinion == "1":
+                sleep(.5)
+                opinion = 1
+                add_response_to_database(qs, opinion)
+
+            elif opinion == "-1":
+                sleep(.5)
+                opinion = -1
+                add_response_to_database(qs, opinion)
 
 
 question = pull_qs_from_csv()
