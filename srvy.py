@@ -87,12 +87,15 @@ def add_response_to_database(question, opinion):
         c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''',
                   (current_date, current_unix_time, question, opinion))
         print("Successfully added response to database.")
-        text = font.render('Thank You!', True, (255, 255, 255))  # text to display and color in tuple
-        screen.fill((105, 58, 119))  # sets background color
-        screen.blit(text,
-                    (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to center of screen
-        pygame.display.flip()
-        sleep(2)  # gives viewer a chance to read
+        if module_installed('pygame'):
+            text = font.render('Thank You!', True, (255, 255, 255))  # text to display and color in tuple
+            screen.fill((105, 58, 119))  # sets background color
+            screen.blit(text,
+                       (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to center of screen
+            pygame.display.flip()
+            sleep(2)  # gives viewer a chance to read
+        else:
+            print("Thank you!")
     except Exception as e:
         print(e)
 
