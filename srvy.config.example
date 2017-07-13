@@ -2,8 +2,8 @@
 token = INSERT_DROPBOX_TOKEN_HERE
 
 [screen]
-screen_width = 800
-screen_height = 480
+width = 800
+height = 480
 
 [colors]
 background_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)]
