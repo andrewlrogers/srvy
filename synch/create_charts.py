@@ -27,8 +27,6 @@ sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetim
 all_query = 'SELECT * FROM responses'
 conn = sqlite3.connect(database_file)
 
-""" F U N C T I O N S """
-
 
 def create_output_directory(date):
     """Creates output directory for charts, using date for organization"""
@@ -82,51 +80,52 @@ chart_group = []
 pie_group = []
 
 
-def create_questions_chart():
-    print('Creating bar chart for questions')  #
-    question_bar = Bar(df.sort_values(by='opinion', ascending=False), title='Opinion reponses by question asked.',
-                       values='like_dislike', label='question', stack='like_dislike', ylabel='Number of Responses',
-                       agg='count', legend='top_right', palette=crocker_contrast)
-    chart_group.append(question_bar)
+class Charts:
+
+    def questions():
+        print('Creating bar chart for questions...')  #
+        question_bar = Bar(df.sort_values(by='opinion', ascending=False), title='Opinion reponses by question asked.',
+                           values='like_dislike', label='question', stack='like_dislike', ylabel='Number of Responses',
+                           agg='count', legend='top_right', palette=crocker_contrast)
+        return question_bar
+        chart_group.append(question_bar)
+
+    def overall_likes():
+        print('Creating donut chart of overall likes/dislikes')
+        donut_chart = Donut(df, title='Like and Dislike distribution', label=['like_dislike'], values='opinion',
+                            agg='count', palette=crocker_purple)
+        pie_group.append(donut_chart)
+
+    def hourly_likes():
+        print('Creating an hourly Bar Chart')
+        hourly_bar = Bar(df.sort_values(by='opinion', ascending=False), title='Opinion by hour of the day',
+                         values='opinion', label='hour', stack='like_dislike', xlabel='Hour of the Day',
+                         ylabel='Number of Responses', agg='count', legend='top_right', palette=crocker_contrast)
+        chart_group.append(hourly_bar)
 
 
-def create_overall_likes_chart():
-    print('Creating donut chart of overall like/dislike')
-    donut_chart = Donut(df, title='Like and Dislike distribution', label=['like_dislike'], values='opinion',
-                        agg='count', palette=crocker_purple)
-    pie_group.append(donut_chart)
+    def question_distribution():
+        print('Creating donut chart of question distribution')
+        q_dist = Donut(df, title='Distribition of questions asked', label='question', hover_text='question',
+                       hover_tool=True, values='question', agg='count', palette=crocker_purple)
+        pie_group.append(q_dist)
 
 
-def create_hourly_bar_chart():
-    print('Creating an hourly Bar Chart')
-    hourly_bar = Bar(df.sort_values(by='opinion', ascending=False), title='Opinion by hour of the day',
-                     values='opinion', label='hour', stack='like_dislike', xlabel='Hour of the Day',
-                     ylabel='Number of Responses', agg='count', legend='top_right', palette=crocker_contrast)
-    chart_group.append(hourly_bar)
+    def score():
+        print('Creating score')
+        total_score = Bar(df_score, title='Score by question: 0 is neutral', label='question', values='score', legend=False,
+                          ylabel='Score', palette=crocker_contrast)
+        chart_group.append(total_score)
 
 
-def create_question_distribution_chart():
-    print('Creating donut chart of question distribution')
-    q_dist = Donut(df, title='Distribition of questions asked', label='question', hover_text='question',
-                   hover_tool=True, values='question', agg='count', palette=crocker_purple)
-    pie_group.append(q_dist)
+    def create_output_file():
+        output_file('../export/' + str(today) + '.html')  # Creates single .html file with all charts
 
-
-def create_score_chart():
-    print('Creating score')
-    total_score = Bar(df_score, title='Score by question: 0 is neutral', label='question', values='score', legend=False,
-                      ylabel='Score', palette=crocker_contrast)
-    chart_group.append(total_score)
-
-
-def create_output_file():
-    output_file('../export/' + str(today) + '.html')  # Creates single .html file with all charts
-
-    # show(time_line)
-    # set layout and show digest chart
-    pie_grid = gridplot(pie_group, ncols=2, plot_width=300, plot_height=300)
-    chart_grid = gridplot(chart_group, ncols=1, plot_width=600)
-    show(column(pie_grid, chart_grid))
+        # show(time_line)
+        # set layout and show digest chart
+        pie_grid = gridplot(pie_group, ncols=2, plot_width=300, plot_height=300)
+        chart_grid = gridplot(chart_group, ncols=1, plot_width=600)
+        show(column(pie_grid, chart_grid))
 
 
 def create_all_charts():
@@ -139,4 +138,10 @@ def create_all_charts():
     create_output_file()
 
 
-create_all_charts()
+charts = Charts
+charts.overall_likes()
+charts.questions()
+charts.hourly_likes()
+charts.question_distribution()
+charts.score()
+charts.create_output_file()
