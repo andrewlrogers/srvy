@@ -1,5 +1,3 @@
-# Created by https://www.gitignore.io/api/images,vagrant,vim
-
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
 *.py[cod]
@@ -69,14 +67,6 @@
 # Vagrant
 .vagrant/
 
-# Database
-movies.db
-movies-watched.db
-
-# Django
-sodiepop_site/db.sqlite3
-sodiepop_site/sodiepop_site/__pycache__/
-
 ### Vim ###
 # swap
 [._]*.s[a-w][a-z]
@@ -95,3 +85,4 @@ export/
 
 # Config files
 srvy.config
+.idea/
