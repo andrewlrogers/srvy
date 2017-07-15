@@ -105,14 +105,14 @@ def create_hourly_bar_chart():
     chart_group.append(hourly_bar)
 
 
-def create_question_distribution_chart()
+def create_question_distribution_chart():
     print('Creating donut chart of question distribution')
     q_dist = Donut(df, title='Distribition of questions asked', label='question', hover_text='question',
                    hover_tool=True, values='question', agg='count', palette=crocker_purple)
     pie_group.append(q_dist)
 
 
-def create_score_chart()
+def create_score_chart():
     print('Creating score')
     total_score = Bar(df_score, title='Score by question: 0 is neutral', label='question', values='score', legend=False,
                       ylabel='Score', palette=crocker_contrast)
