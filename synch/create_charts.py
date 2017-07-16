@@ -170,9 +170,13 @@ def create_output_file():
     show(column(pie_grid, chart_grid))
 
 
-create_questions_chart()
-create_overall_likes_chart()
-create_hourly_likes_chart()
-create_question_distribution_chart()
-create_score_chart()
-create_output_file()
+def main():
+    create_questions_chart()
+    create_overall_likes_chart()
+    create_hourly_likes_chart()
+    create_question_distribution_chart()
+    create_score_chart()
+    create_output_file()
+
+
+main()
