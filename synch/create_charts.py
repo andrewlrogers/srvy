@@ -74,7 +74,7 @@ def create_scorecard(df):
     return df_score
 
 
-def create_questions_chart():
+def create_questions_chart(group):
     by = "opinion"
     ascending = False
     title = "Opinion responses by question asked."
@@ -94,7 +94,7 @@ def create_questions_chart():
     pie_group.append(questions_chart)
 
 
-def create_overall_likes_chart():
+def create_overall_likes_chart(group):
     title = "Like vs. dislikes"
     label = "like_dislike"
     values = "opinion"
@@ -105,10 +105,10 @@ def create_overall_likes_chart():
     overall_likes_chart = Donut(df, title=title, label=[label], values=values,
                                 agg=agg, palette=palette)
 
-    chart_group.append(overall_likes_chart)
+    group.append(overall_likes_chart)
 
 
-def create_hourly_likes_chart():
+def create_hourly_likes_chart(group):
     by = 'opinion'
     ascending = False
     title = "Opinion by hour"
@@ -126,10 +126,10 @@ def create_hourly_likes_chart():
                              values=values, label=label, stack=stack, xlabel=xlabel,
                              ylabel=ylabel, agg=agg, legend=legend, palette=palette)
 
-    chart_group.append(hourly_likes_chart)
+    group.append(hourly_likes_chart)
 
 
-def create_question_distribution_chart():
+def create_question_distribution_chart(group):
     title = "Distribution of questions"
     label = "question"
     hover_text = "question"
@@ -141,10 +141,10 @@ def create_question_distribution_chart():
     print('Creating donut chart of question distribution...')
     questions_distribution_chart = Donut(df, title=title, label=label, hover_text=hover_text,
                                          hover_tool=hover_tool, values=values, agg=agg, palette=palette)
-    pie_group.append(questions_distribution_chart)
+    group.append(questions_distribution_chart)
 
 
-def create_score_chart():
+def create_score_chart(group):
     title = "Score by question. 0 is neutral."
     label = "question"
     values = 'score'
@@ -157,7 +157,7 @@ def create_score_chart():
                       legend=legend,
                       ylabel=ylabel, palette=palette)
 
-    chart_group.append(score_chart)
+    group.append(score_chart)
 
 
 def create_output_file():
@@ -171,11 +171,11 @@ def create_output_file():
 
 
 def main():
-    create_questions_chart()
-    create_overall_likes_chart()
-    create_hourly_likes_chart()
-    create_question_distribution_chart()
-    create_score_chart()
+    create_questions_chart(pie_group)
+    create_overall_likes_chart(chart_group)
+    create_hourly_likes_chart(chart_group)
+    create_question_distribution_chart(pie_group)
+    create_score_chart(chart_group)
     create_output_file()
 
 
