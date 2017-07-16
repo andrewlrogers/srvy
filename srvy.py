@@ -74,8 +74,6 @@ def add_response_to_database(question, opinion):
     """Add response to SQLite 3 database"""
 
     sqlite_file = 'srvy.db'
-    question_column = 'question'
-    opinion_column = 'opinion'
 
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
