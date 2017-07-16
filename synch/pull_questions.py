@@ -39,7 +39,7 @@ csv_to_upload = yesterday + ".csv"
 files_to_upload = (chart_to_upload, csv_to_upload)
 
 
-def foopa(files_to_upload):  # need to change this function name
+def upload(files_to_upload):  # need to change this function name
     for f in files_to_upload:
         try:
             filepath = pathlib.Path("/home/pi/srvy/export/" + f)
@@ -65,5 +65,5 @@ def upload_files(filepath, filename):
 
 """ M A I N """
 download_questions()
-foopa(files_to_upload)
+upload(files_to_upload)
 # upload_files(pathlib.Path("/home/pi/srvy/export/srvy2017-02-18.csv"), "srvy2017-02-18.csv")
