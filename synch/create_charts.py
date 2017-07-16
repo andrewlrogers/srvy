@@ -105,26 +105,57 @@ class Chart:
         print('Creating donut chart of overall likes/dislikes...')
         overall_likes_chart = Donut(df, title=title, label=[label], values=values,
                                     agg=agg, palette=palette)
+
         chart_group.append(overall_likes_chart)
 
     def hourly_likes():
+        by = 'opinion'
+        ascending = False
+        title = "Opinion by hour"
+        values = "opinion"
+        label = "hour"
+        stack = "like_dislike"
+        xlabel = "Hour of the day"
+        ylabel = "Number of responses"
+        agg = "count"
+        legend = "top_right"
+        palette = crocker_contrast
+
         print('Creating an hourly Bar Chart')
-        hourly_likes_chart = Bar(df.sort_values(by='opinion', ascending=False), title='Opinion by hour of the day',
-                                 values='opinion', label='hour', stack='like_dislike', xlabel='Hour of the Day',
-                                 ylabel='Number of Responses', agg='count', legend='top_right', palette=crocker_contrast)
+        hourly_likes_chart = Bar(df.sort_values(by=by, ascending=ascending), title=title,
+                                 values=values, label=label, stack=stack, xlabel=xlabel,
+                                 ylabel=ylabel, agg=agg, legend=legend, palette=palette)
+
         chart_group.append(hourly_likes_chart)
 
     def question_distribution():
-        print('Creating donut chart of question distribution')
-        questions_distrobution_chart = Donut(df, title='Distribition of questions asked', label='question', hover_text='question',
-                                             hover_tool=True, values='question', agg='count', palette=crocker_purple)
+        title = "Questions asked"
+        label = "Question"
+        hover_text = "question"
+        hover_tool = True
+        values = "Question"
+        agg = "count"
+        palette = crocker_purple
+
+        questions_distrobution_chart = Donut(df, title=title, label=label,
+                                             hover_text=hover_text,
+                                             hover_tool=hover_tool, values=values, agg=agg, palette=palette)
+
         pie_group.append(questions_distrobution_chart)
 
     def score():
+        title = "Score by question. 0 is neutral."
+        label = "question"
+        values = 'score'
+        legend = False
+        ylabel = "Score"
+        palette = crocker_contrast
+
         print('Creating score')
-        score_chart = Bar(df_score, title='Score by question: 0 is neutral', label='question', values='score',
-                          legend=False,
-                          ylabel='Score', palette=crocker_contrast)
+        score_chart = Bar(df_score, title=title, label=label, values=values,
+                          legend=legend,
+                          ylabel=ylabel, palette=palette)
+
         chart_group.append(score_chart)
 
     def create_output_file():
