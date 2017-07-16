@@ -38,7 +38,7 @@ def get_unique_questions(df):
     for question in df['question']:
         if question not in questions:
             questions.append(question)
-    return (questions)
+    return questions
 
 
 def generate_dataframe():
@@ -51,7 +51,7 @@ def generate_dataframe():
     df.ix[
         df.opinion > 0, 'like_dislike'] = 'Liked'  # if the value in opinion is > 0 then the value in like_dislike is 'Liked'
     df.ix[df.opinion < 0, 'like_dislike'] = 'Disliked'  # does the opposite as above
-    return (df)
+    return df
 
 
 def create_scorecard(df):
@@ -65,7 +65,7 @@ def create_scorecard(df):
         question.append(q)
     data = {'question': question, 'score': score}
     df_score = pd.DataFrame(data, columns=['question', 'score'])
-    return (df_score)
+    return df_score
 
 
 df = generate_dataframe()
