@@ -24,12 +24,6 @@ sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetim
 all_query = 'SELECT * FROM responses'
 conn = sqlite3.connect(database_file)
 
-# Dataframe
-df = generate_dataframe()
-df_score = create_scorecard(df)
-chart_group = []
-pie_group = []
-
 
 def create_output_directory(date):
     """Creates output directory for charts, using date for organization"""
@@ -70,8 +64,15 @@ def create_scorecard(df):
         score.append(qs)
         question.append(q)
     data = {'question': question, 'score': score}
-    df_score = pd.DataFrame(data, columns=['question', 'score'])
+    df_score = pd.DataFrame(data, columns=['question':memoryview, 'score'])
     return df_score
+
+
+# Dataframe
+df = generate_dataframe()
+df_score = create_scorecard(df)
+chart_group = []
+pie_group = []
 
 
 def create_questions_chart(group):
