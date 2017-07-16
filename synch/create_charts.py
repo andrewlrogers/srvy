@@ -121,7 +121,7 @@ class Chart:
         legend = "top_right"
         palette = crocker_contrast
 
-        print('Creating an hourly Bar Chart')
+        print('Creating hourly bar chart...')
         hourly_likes_chart = Bar(df.sort_values(by=by, ascending=ascending), title=title,
                                  values=values, label=label, stack=stack, xlabel=xlabel,
                                  ylabel=ylabel, agg=agg, legend=legend, palette=palette)
@@ -129,19 +129,18 @@ class Chart:
         chart_group.append(hourly_likes_chart)
 
     def question_distribution():
-        title = "Questions asked"
-        label = "Question"
+        title = "Distribution of questions"
+        label = "question"
         hover_text = "question"
         hover_tool = True
-        values = "Question"
+        values = "question"
         agg = "count"
         palette = crocker_purple
 
-        questions_distrobution_chart = Donut(df, title=title, label=label,
-                                             hover_text=hover_text,
+        print('Creating donut chart of question distribution...')
+        questions_distribution_chart = Donut(df, title=title, label=label, hover_text=hover_text,
                                              hover_tool=hover_tool, values=values, agg=agg, palette=palette)
-
-        pie_group.append(questions_distrobution_chart)
+        pie_group.append(questions_distribution_chart)
 
     def score():
         title = "Score by question. 0 is neutral."
@@ -151,7 +150,7 @@ class Chart:
         ylabel = "Score"
         palette = crocker_contrast
 
-        print('Creating score')
+        print('Creating score...')
         score_chart = Bar(df_score, title=title, label=label, values=values,
                           legend=legend,
                           ylabel=ylabel, palette=palette)
