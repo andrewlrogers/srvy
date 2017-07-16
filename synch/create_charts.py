@@ -74,102 +74,105 @@ chart_group = []
 pie_group = []
 
 
-class Chart:
-    def questions():
-        by = "opinion"
-        ascending = False
-        title = "Opinion responses by question asked."
-        values = "like_dislike"
-        label = "question"
-        stack = "like_dislike"
-        ylabel = "Number of Responses"
-        agg = "count"
-        legend = "top_right"
-        palette = crocker_purple
+def create_questions_chart():
+    by = "opinion"
+    ascending = False
+    title = "Opinion responses by question asked."
+    values = "like_dislike"
+    label = "question"
+    stack = "like_dislike"
+    ylabel = "Number of Responses"
+    agg = "count"
+    legend = "top_right"
+    palette = crocker_purple
 
-        print('Creating bar chart for questions...')
-        questions_chart = Bar(df.sort_values(by=by, ascending=ascending), title=title,
-                              values=values, label=label, stack=stack, ylabel=ylabel,
-                              agg=agg, legend=legend, palette=palette)
+    print('Creating bar chart for questions...')
+    questions_chart = Bar(df.sort_values(by=by, ascending=ascending), title=title,
+                          values=values, label=label, stack=stack, ylabel=ylabel,
+                          agg=agg, legend=legend, palette=palette)
 
-        pie_group.append(questions_chart)
-
-    def overall_likes():
-        title = "Like vs. dislikes"
-        label = "like_dislike"
-        values = "opinion"
-        agg = "count"
-        palette = crocker_purple
-
-        print('Creating donut chart of overall likes/dislikes...')
-        overall_likes_chart = Donut(df, title=title, label=[label], values=values,
-                                    agg=agg, palette=palette)
-
-        chart_group.append(overall_likes_chart)
-
-    def hourly_likes():
-        by = 'opinion'
-        ascending = False
-        title = "Opinion by hour"
-        values = "opinion"
-        label = "hour"
-        stack = "like_dislike"
-        xlabel = "Hour of the day"
-        ylabel = "Number of responses"
-        agg = "count"
-        legend = "top_right"
-        palette = crocker_contrast
-
-        print('Creating hourly bar chart...')
-        hourly_likes_chart = Bar(df.sort_values(by=by, ascending=ascending), title=title,
-                                 values=values, label=label, stack=stack, xlabel=xlabel,
-                                 ylabel=ylabel, agg=agg, legend=legend, palette=palette)
-
-        chart_group.append(hourly_likes_chart)
-
-    def question_distribution():
-        title = "Distribution of questions"
-        label = "question"
-        hover_text = "question"
-        hover_tool = True
-        values = "question"
-        agg = "count"
-        palette = crocker_purple
-
-        print('Creating donut chart of question distribution...')
-        questions_distribution_chart = Donut(df, title=title, label=label, hover_text=hover_text,
-                                             hover_tool=hover_tool, values=values, agg=agg, palette=palette)
-        pie_group.append(questions_distribution_chart)
-
-    def score():
-        title = "Score by question. 0 is neutral."
-        label = "question"
-        values = 'score'
-        legend = False
-        ylabel = "Score"
-        palette = crocker_contrast
-
-        print('Creating score...')
-        score_chart = Bar(df_score, title=title, label=label, values=values,
-                          legend=legend,
-                          ylabel=ylabel, palette=palette)
-
-        chart_group.append(score_chart)
-
-    def create_output_file():
-        output_file('../export/' + str(today) + '.html')  # Creates single .html file with all charts
-
-        # show(time_line)
-        # set layout and show digest chart
-        pie_grid = gridplot(pie_group, ncols=2, plot_width=300, plot_height=300)
-        chart_grid = gridplot(chart_group, ncols=1, plot_width=600)
-        show(column(pie_grid, chart_grid))
+    pie_group.append(questions_chart)
 
 
-chart = Chart
-chart.questions()
-chart.overall_likes()
-chart.hourly_likes()
-chart.question_distribution()
-chart.score()
-chart.create_output_file()
+def create_overall_likes_chart():
+    title = "Like vs. dislikes"
+    label = "like_dislike"
+    values = "opinion"
+    agg = "count"
+    palette = crocker_purple
+
+    print('Creating donut chart of overall likes/dislikes...')
+    overall_likes_chart = Donut(df, title=title, label=[label], values=values,
+                                agg=agg, palette=palette)
+
+    chart_group.append(overall_likes_chart)
+
+
+def create_hourly_likes_chart():
+    by = 'opinion'
+    ascending = False
+    title = "Opinion by hour"
+    values = "opinion"
+    label = "hour"
+    stack = "like_dislike"
+    xlabel = "Hour of the day"
+    ylabel = "Number of responses"
+    agg = "count"
+    legend = "top_right"
+    palette = crocker_contrast
+
+    print('Creating hourly bar chart...')
+    hourly_likes_chart = Bar(df.sort_values(by=by, ascending=ascending), title=title,
+                             values=values, label=label, stack=stack, xlabel=xlabel,
+                             ylabel=ylabel, agg=agg, legend=legend, palette=palette)
+
+    chart_group.append(hourly_likes_chart)
+
+
+def create_question_distribution_chart():
+    title = "Distribution of questions"
+    label = "question"
+    hover_text = "question"
+    hover_tool = True
+    values = "question"
+    agg = "count"
+    palette = crocker_purple
+
+    print('Creating donut chart of question distribution...')
+    questions_distribution_chart = Donut(df, title=title, label=label, hover_text=hover_text,
+                                         hover_tool=hover_tool, values=values, agg=agg, palette=palette)
+    pie_group.append(questions_distribution_chart)
+
+
+def create_score_chart():
+    title = "Score by question. 0 is neutral."
+    label = "question"
+    values = 'score'
+    legend = False
+    ylabel = "Score"
+    palette = crocker_contrast
+
+    print('Creating score...')
+    score_chart = Bar(df_score, title=title, label=label, values=values,
+                      legend=legend,
+                      ylabel=ylabel, palette=palette)
+
+    chart_group.append(score_chart)
+
+
+def create_output_file():
+    output_file('../export/' + str(today) + '.html')  # Creates single .html file with all charts
+
+    # show(time_line)
+    # set layout and show digest chart
+    pie_grid = gridplot(pie_group, ncols=2, plot_width=300, plot_height=300)
+    chart_grid = gridplot(chart_group, ncols=1, plot_width=600)
+    show(column(pie_grid, chart_grid))
+
+
+create_questions_chart()
+create_overall_likes_chart()
+create_hourly_likes_chart()
+create_question_distribution_chart()
+create_score_chart()
+create_output_file()
