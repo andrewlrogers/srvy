@@ -64,7 +64,7 @@ def create_scorecard(df):
         score.append(qs)
         question.append(q)
     data = {'question': question, 'score': score}
-    df_score = pd.DataFrame(data, columns=['question':memoryview, 'score'])
+    df_score = pd.DataFrame(data, columns=['question', 'score'])
     return df_score
 
 
