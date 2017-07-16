@@ -12,7 +12,7 @@ database_file = "../srvy.db"
 
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
-now_datetime = time.mktime((datetime.now()).timetuple())  # returns the dateime as a timestamp
+now_datetime = time.mktime((datetime.now()).timetuple())  # returns the datetime as a timestamp
 prev_datetime = time.mktime((datetime.now() - timedelta(days=10)).timetuple())
 
 # Palettes
@@ -23,6 +23,12 @@ crocker_contrast = ['#693A77', '#A2AD00', '#565A5C']
 sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(now_datetime) + ' '
 all_query = 'SELECT * FROM responses'
 conn = sqlite3.connect(database_file)
+
+# Dataframe
+df = generate_dataframe()
+df_score = create_scorecard(df)
+chart_group = []
+pie_group = []
 
 
 def create_output_directory(date):
@@ -42,7 +48,7 @@ def get_unique_questions(df):
 
 
 def generate_dataframe():
-    """From create_all_charts reurns value for df"""
+    """From create_all_charts returns value for df"""
     df = pd.read_sql_query(all_query, conn, parse_dates=['pythonDateTime'])
     df['hour'] = df['pythonDateTime'].dt.strftime('%H')  # Adds hour Column with hour as 24 hour padded
     df['dayweek'] = df['pythonDateTime'].dt.strftime('%A')  # Adds dayweek Column with Monday, Tuesday, etc style
@@ -66,12 +72,6 @@ def create_scorecard(df):
     data = {'question': question, 'score': score}
     df_score = pd.DataFrame(data, columns=['question', 'score'])
     return df_score
-
-
-df = generate_dataframe()
-df_score = create_scorecard(df)
-chart_group = []
-pie_group = []
 
 
 def create_questions_chart():
