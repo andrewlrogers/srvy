@@ -1,4 +1,4 @@
-"""Allows unittest to use relative imports"""
+"""Allows unittest to use relative imports (e.g. testing a function imported from srvy/synch) """
 import sys
 import os
 
