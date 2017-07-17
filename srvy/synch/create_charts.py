@@ -19,10 +19,6 @@ prev_datetime = time.mktime((datetime.now() - timedelta(days=10)).timetuple())
 crocker_purple = ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc']
 crocker_contrast = ['#693A77', '#A2AD00', '#565A5C']
 
-# SQLite
-sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(now_datetime) + ' '
-all_query = 'SELECT * FROM responses'
-conn = sqlite3.connect(database_file)
 
 
 def create_output_directory(date):
@@ -66,13 +62,6 @@ def create_scorecard(df):
     data = {'question': question, 'score': score}
     df_score = pd.DataFrame(data, columns=['question', 'score'])
     return df_score
-
-
-# Dataframe
-df = generate_dataframe()
-df_score = create_scorecard(df)
-chart_group = []
-pie_group = []
 
 
 def create_questions_chart(group):
@@ -170,14 +159,28 @@ def create_output_file():
     chart_grid = gridplot(chart_group, ncols=1, plot_width=600)
     show(column(pie_grid, chart_grid))
 
+def sample_test(number1, number2):
+    return number1 + number2
 
-def main():
+
+if __name__ == '__main__':
+    # SQLite
+    sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(now_datetime) + ' '
+    all_query = 'SELECT * FROM responses'
+    conn = sqlite3.connect(database_file)
+
+    # Dataframe
+    df = generate_dataframe()
+    df_score = create_scorecard(df)
+    chart_group = []
+    pie_group = []
+
+    # Create charts
     create_questions_chart(pie_group)
     create_overall_likes_chart(chart_group)
     create_hourly_likes_chart(chart_group)
     create_question_distribution_chart(pie_group)
     create_score_chart(chart_group)
+
+    # Create output file
     create_output_file()
-
-
-main()
