@@ -81,8 +81,8 @@ tags
 
 .pyc
 *flymake.py
-export/
+srvy/export/
 
 # Config files
-srvy.config
+srvy/srvy.config
 .idea/
