@@ -20,7 +20,6 @@ crocker_purple = ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc']
 crocker_contrast = ['#693A77', '#A2AD00', '#565A5C']
 
 
-
 def create_output_directory(date):
     """Creates output directory for charts, using date for organization"""
     directory = '../export/' + str(date) + '/'
@@ -159,13 +158,15 @@ def create_output_file():
     chart_grid = gridplot(chart_group, ncols=1, plot_width=600)
     show(column(pie_grid, chart_grid))
 
+
 def sample_test(number1, number2):
     return number1 + number2
 
 
 if __name__ == '__main__':
     # SQLite
-    sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(now_datetime) + ' '
+    sql_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(
+        now_datetime) + ' '
     all_query = 'SELECT * FROM responses'
     conn = sqlite3.connect(database_file)
 

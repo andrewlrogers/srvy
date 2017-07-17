@@ -26,7 +26,6 @@ def create_random_question():
 
 
 def add_random_questions_to_database():
-    questions = [pull_questions_from_csv()]
 
     for date in date_range:
 
@@ -69,15 +68,9 @@ def add_random_questions_to_database():
 
         # Sort random daily responses by time "entered"
         daily_responses = sorted(daily_responses)
-        count = 0
 
         # Add to database
         sqlite_file = 'srvy.db'
-        table_name = 'responses'
-        time_column = 'pythonDateTime'
-        unix_time_column = 'unixTime'
-        question_column = 'question'
-        opinion_column = 'opinion'
 
         conn = sqlite3.connect(sqlite_file)
         c = conn.cursor()
