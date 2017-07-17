@@ -86,3 +86,5 @@ srvy/export/
 # Config files
 srvy/srvy.config
 .idea/
+
+*.out
