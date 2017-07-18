@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import sys
+
 try:
     from gpiozero import Button
 except ImportError:
@@ -21,11 +22,13 @@ except ImportError:
 import csv
 from configparser import ConfigParser
 
+
 def module_installed(module):
     if module in sys.modules:
         return True
     else:
         return False
+
 
 # Configuration
 parser = ConfigParser()
@@ -34,7 +37,7 @@ screen_width = parser.get('screen', 'width')
 screen_height = parser.get('screen', 'height')
 
 if module_installed('pygame'):
-# Pygame Setup
+    # Pygame Setup
     pygame.init()
 
     screen_width = 800  # Set width and height to match your monitor.
@@ -56,8 +59,9 @@ if module_installed('pygame'):
 else:
     pass
 
-def pull_qs_from_csv():  # reads the questions into mem from csv in case they have been updated.
-    with open('synch/questions.csv', 'rU') as csv_file:
+
+def pull_qs_from_csv(file_location):  # reads the questions into mem from csv in case they have been updated.
+    with open(file_location, 'ru') as csv_file:
         readCSV = csv.reader(csv_file, delimiter=',', quotechar='|')
         question = []
         for row in readCSV:
@@ -89,7 +93,8 @@ def add_response_to_database(question, opinion):
             text = font.render('Thank You!', True, (255, 255, 255))  # text to display and color in tuple
             screen.fill((105, 58, 119))  # sets background color
             screen.blit(text,
-                       (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to center of screen
+                        (screen_width / 2 - text.get_rect().width / 2,
+                         screen_height / 2))  # adds text to center of screen
             pygame.display.flip()
             sleep(2)  # gives viewer a chance to read
         else:
@@ -113,7 +118,8 @@ def main():
         text = font.render(qs, True, (255, 255, 255))  # displays text, anti-aliasing  and sets text color
         screen.fill(random.choice(bg_color))  # sets background color
         screen.blit(text,
-                    (screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to screen and centers
+                    (
+                    screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to screen and centers
         pygame.display.flip()
     else:
         pass
@@ -146,5 +152,5 @@ def main():
                 add_response_to_database(qs, opinion)
 
 
-question = pull_qs_from_csv()
+question = pull_qs_from_csv('synch/questions.csv')
 main()
