@@ -30,38 +30,8 @@ def module_installed(module):
         return False
 
 
-# Configuration
-parser = ConfigParser()
-parser.read('srvy.config', encoding='utf-8')
-screen_width = parser.get('screen', 'width')
-screen_height = parser.get('screen', 'height')
-
-if module_installed('pygame'):
-    # Pygame Setup
-    pygame.init()
-
-    screen_width = 800  # Set width and height to match your monitor.
-    screen_height = 480
-    bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90, 92)]  # crocker colors
-
-    screen = pygame.display.set_mode((screen_width, screen_height),
-                                     pygame.FULLSCREEN)  # remove pygame.FULLSCREEN for windowed mode
-    pygame.mouse.set_visible(False)  # Hides the mouse cursor
-
-    font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)  # system fonts and size
-
-    # Button Setup
-    love = Button(18)
-    like = Button(14)
-    dislike = Button(15)
-    hate = Button(17)
-
-else:
-    pass
-
-
 def pull_qs_from_csv(file_location):  # reads the questions into mem from csv in case they have been updated.
-    with open(file_location, 'ru') as csv_file:
+    with open(file_location, 'rU') as csv_file:
         readCSV = csv.reader(csv_file, delimiter=',', quotechar='|')
         question = []
         for row in readCSV:
@@ -151,6 +121,36 @@ def main():
                 opinion = -1
                 add_response_to_database(qs, opinion)
 
+if __name__ == '__main__':
 
-question = pull_qs_from_csv('synch/questions.csv')
-main()
+    # Configuration
+    parser = ConfigParser()
+    parser.read('srvy.config', encoding='utf-8')
+    screen_width = parser.get('screen', 'width')
+    screen_height = parser.get('screen', 'height')
+
+    if module_installed('pygame'):
+        # Pygame Setup
+        pygame.init()
+
+        screen_width = 800  # Set width and height to match your monitor.
+        screen_height = 480
+        bg_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90, 92)]  # crocker colors
+
+        screen = pygame.display.set_mode((screen_width, screen_height),
+                                         pygame.FULLSCREEN)  # remove pygame.FULLSCREEN for windowed mode
+        pygame.mouse.set_visible(False)  # Hides the mouse cursor
+
+        font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)  # system fonts and size
+
+        # Button Setup
+        love = Button(18)
+        like = Button(14)
+        dislike = Button(15)
+        hate = Button(17)
+
+    else:
+        pass
+
+    question = pull_qs_from_csv('synch/questions.csv')
+    main()
