@@ -31,7 +31,7 @@ def module_installed(module):
 
 
 def pull_questions_from_csv(file_location):  # reads the questions into mem from csv in case they have been updated.
-    with open(file_location, 'rU') as csv_file:
+    with open(file_location, 'r') as csv_file:
         readCSV = csv.reader(csv_file)
         questions = []
         for row in readCSV:
