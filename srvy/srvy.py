@@ -30,7 +30,8 @@ def module_installed(module):
         return False
 
 
-def pull_questions_from_csv(file_location):  # reads the questions into mem from csv in case they have been updated.
+def pull_questions_from_csv(file_location):
+    """Add each question from a text file to a list. Questions should be separated by newlines."""
     with open(file_location, 'r') as csv_file:
         readCSV = csv.reader(csv_file)
         questions = []
