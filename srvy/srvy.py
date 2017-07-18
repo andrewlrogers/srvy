@@ -30,14 +30,14 @@ def module_installed(module):
         return False
 
 
-def pull_qs_from_csv(file_location):  # reads the questions into mem from csv in case they have been updated.
+def pull_questions_from_csv(file_location):  # reads the questions into mem from csv in case they have been updated.
     with open(file_location, 'rU') as csv_file:
         readCSV = csv.reader(csv_file)
-        question = []
+        questions = []
         for row in readCSV:
-            q = row[0]
-            question.append(q)
-        return question
+            question = row[0]
+            questions.append(question)
+        return questions
 
 
 def random_questions():  # pulls returns a random question into main loop.
@@ -152,5 +152,5 @@ if __name__ == '__main__':
     else:
         pass
 
-    question = pull_qs_from_csv('synch/questions.csv')
+    question = pull_questions_from_csv('synch/questions.csv')
     main()
