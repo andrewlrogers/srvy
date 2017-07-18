@@ -25,9 +25,9 @@ dbx = dropbox.Dropbox(dropbox_token)
 
 def download_questions():
     """downloads csv from dropbox and overwrites locally"""
-    local = '/home/pi/srvy/synch/questions.csv'  # The folder/file locally that we want the files to download to.
+    local = '/home/pi/srvy/synch/questions.txt'  # The folder/file locally that we want the files to download to.
     with open(local, 'wb') as f:
-        metadata, res = dbx.files_download('/questions.csv')
+        metadata, res = dbx.files_download('/questions.txt')
         f.write(res.content)
 
 

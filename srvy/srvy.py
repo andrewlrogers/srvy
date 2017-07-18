@@ -30,7 +30,7 @@ def module_installed(module):
         return False
 
 
-def pull_questions_from_csv(file_location):
+def get_current_questions(file_location):
     """Add each question from a text file to a list. Questions should be separated by newlines."""
     with open(file_location, 'r') as csv_file:
         readCSV = csv.reader(csv_file)
@@ -153,5 +153,5 @@ if __name__ == '__main__':
     else:
         pass
 
-    question = pull_questions_from_csv('synch/questions.csv')
+    question = get_current_questions('synch/questions.txt')
     main()

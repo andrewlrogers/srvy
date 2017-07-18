@@ -11,7 +11,7 @@ date_range = pd.date_range(start_date, end_date)
 
 
 def pull_questions_from_csv():
-    with open('synch/questions.csv', 'rU') as csv_file:
+    with open('synch/questions.txt', 'rU') as csv_file:
         readCSV = csv.reader(csv_file, delimiter=',', quotechar='|')
         question = []
         for row in readCSV:
