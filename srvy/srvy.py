@@ -45,6 +45,17 @@ def random_questions():  # pulls returns a random question into main loop.
     return random.choice(question)
 
 
+def submit_thank_you():
+    """Displays thank you message after successful response submission to database"""
+    text = font.render('Thank You!', True, (255, 255, 255))  # text to display and color in tuple
+    screen.fill((105, 58, 119))  # sets background color
+    screen.blit(text,
+                (screen_width / 2 - text.get_rect().width / 2,
+                 screen_height / 2))  # adds text to center of screen
+    pygame.display.flip()
+    sleep(2)  # gives viewer a chance to read
+
+
 def add_response_to_database(question, opinion):
     """Add response to SQLite 3 database"""
 
@@ -61,13 +72,7 @@ def add_response_to_database(question, opinion):
                   (current_date, current_unix_time, question, opinion))
         print("Successfully added response to database.")
         if module_installed('pygame'):
-            text = font.render('Thank You!', True, (255, 255, 255))  # text to display and color in tuple
-            screen.fill((105, 58, 119))  # sets background color
-            screen.blit(text,
-                        (screen_width / 2 - text.get_rect().width / 2,
-                         screen_height / 2))  # adds text to center of screen
-            pygame.display.flip()
-            sleep(2)  # gives viewer a chance to read
+            submit_thank_you()
         else:
             print("Thank you!")
     except Exception as e:
