@@ -68,13 +68,20 @@ def add_response_to_database(question, opinion):
     current_unix_time = time.clock()
 
     try:
+        c.execute('''CREATE TABLE IF NOT EXISTS responses (response_key INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+                    pythonDateTime TEXT NOT NULL, unixTime REAL NOT NULL, question TEXT NOT NULL, 
+                    opinion INTEGER NOT NULL)''')
+
         c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''',
                   (current_date, current_unix_time, question, opinion))
+
         print("Successfully added response to database.")
+
         if module_installed('pygame'):
             submit_thank_you()
         else:
             print("Thank you!")
+
     except Exception as e:
         print(e)
 
@@ -95,7 +102,8 @@ def main():
         screen.fill(random.choice(bg_color))  # sets background color
         screen.blit(text,
                     (
-                    screen_width / 2 - text.get_rect().width / 2, screen_height / 2))  # adds text to screen and centers
+                        screen_width / 2 - text.get_rect().width / 2,
+                        screen_height / 2))  # adds text to screen and centers
         pygame.display.flip()
     else:
         pass
@@ -126,6 +134,7 @@ def main():
                 sleep(.5)
                 opinion = -1
                 add_response_to_database(qs, opinion)
+
 
 if __name__ == '__main__':
 
