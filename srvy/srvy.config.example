@@ -1,3 +1,6 @@
+# SAMPLE CONFIGURATION FILE
+# Rename to srvy.config
+
 [dropbox]
 token = INSERT_DROPBOX_TOKEN_HERE
 
