@@ -20,7 +20,13 @@ except ImportError:
     print("pygame is not installed.")
     pass
 
+# VARIABLES
+question_csv_location = '../archive/questions.csv'
 
+sqlite_file = '../archive/srvy.db'
+
+
+# FUNCTIONS
 
 def module_installed(module):
     if module in sys.modules:
@@ -40,15 +46,13 @@ def get_current_questions(file_location):
         return questions
 
 
-def random_questions():  # pulls returns a random question into main loop.
+def random_questions():
+    """pulls returns a random question into main loop."""
     return random.choice(question)
-
 
 
 def add_response_to_database(question, opinion):
     """Add response to SQLite 3 database"""
-
-    sqlite_file = '../archive/srvy.db'
 
     conn = sqlite3.connect(sqlite_file)
     c = conn.cursor()
@@ -89,5 +93,5 @@ def main():
             add_response_to_database(qs, opinion)
 
 
-question = get_current_questions('../archive/questions.csv')
+question = get_current_questions(question_csv_location)
 main()
