@@ -11,11 +11,11 @@ import time
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
-now_datetime = time.mktime((datetime.now()).timetuple()) #returns the dateime as a timestamp
-prev_datetime = time.mktime((datetime.now() - timedelta(days=1)).timetuple())
+today_timestamp = datetime.now().timestamp() #returns the dateime as a timestamp
+yesterday_timestamp = (datetime.now() -timedelta(days = 1)).timestamp()
 
 ## SQLITE3 VARIABLES
-sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(today) + ' AND ' + str(yesterday) + ' '
+sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
 
 
 export_directory = '../archive'
@@ -28,8 +28,6 @@ table_name = 'responses'
 
 conn =  sqlite3.connect(sqlite_file)
 c = conn.cursor()
-
-#c.execute("SELECT * FROM responses WHERE date LIKE '%"+ current_date +"%'")
 
 try:
     c.execute(sqlite_query)
