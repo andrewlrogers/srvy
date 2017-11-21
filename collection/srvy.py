@@ -58,7 +58,7 @@ def add_response_to_database(question, opinion):
     c = conn.cursor()
 
     current_date = datetime.now()
-    current_unix_time = time.clock()
+    current_unix_time = time.time()
 
     try:
         c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''',

@@ -15,14 +15,14 @@ now_datetime = time.mktime((datetime.now()).timetuple()) #returns the dateime as
 prev_datetime = time.mktime((datetime.now() - timedelta(days=1)).timetuple())
 
 ## SQLITE3 VARIABLES
-sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(now_datetime) + ' '
+sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(today) + ' AND ' + str(yesterday) + ' '
 
 
-export_directory = '../export'
-export_filename = 'srvy' + yesterday + '.csv'
+export_directory = '../archive'
+export_filename = yesterday + '_responses' + '.csv'
 full_export_path = os.path.join(export_directory, export_filename)
 
-sqlite_file = '../srvy.db'
+sqlite_file = '../archive/srvy.db'
 table_name = 'responses'
 
 
