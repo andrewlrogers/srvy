@@ -12,7 +12,7 @@ today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
 today_timestamp = datetime.now().timestamp() #returns the dateime as a timestamp
-yesterday_timestamp = (datetime.now() -timedelta(days = 1)).timestamp()
+yesterday_timestamp = (datetime.now() - timedelta(days = 1)).timestamp()
 
 ## SQLITE3 VARIABLES
 sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
