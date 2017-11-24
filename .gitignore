@@ -84,7 +84,7 @@ tags
 srvy/export/
 
 # Config files
-/configuration/srvy.config
+configuration/srvy.config
 .idea/
 
 *.out
