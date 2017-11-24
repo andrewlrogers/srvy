@@ -34,7 +34,7 @@ def download_questions():
 """ U P L O A D I N G _ FUNCTIONS"""
 
 # the source files to upload
-csv_to_upload = yesterday + "_responses.csv"
+csv_to_upload = str(yesterday) + "_responses.csv"
 files_to_upload = (csv_to_upload)
 
 
