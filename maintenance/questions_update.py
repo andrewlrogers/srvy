@@ -9,7 +9,7 @@ from configparser import ConfigParser
 
 # Dropbox Configuration
 parser = ConfigParser()
-parser.read('../srvy.config')
+parser.read('../configuration/srvy.config')
 dropbox_token = parser.get('dropbox', 'token')
 
 """ S E T U P _ V A R I A B L E S """
@@ -25,24 +25,23 @@ dbx = dropbox.Dropbox(dropbox_token)
 
 def download_questions():
     """downloads csv from dropbox and overwrites locally"""
-    local = '/home/pi/srvy/synch/questions.txt'  # The folder/file locally that we want the files to download to.
+    local = '../archive/questions.csv'  # The folder/file locally that we want the files to download to.
     with open(local, 'wb') as f:
-        metadata, res = dbx.files_download('/questions.txt')
+        metadata, res = dbx.files_download('/questions.csv')
         f.write(res.content)
 
 
 """ U P L O A D I N G _ FUNCTIONS"""
 
 # the source files to upload
-chart_to_upload = yesterday + ".html"
-csv_to_upload = yesterday + ".csv"
-files_to_upload = (chart_to_upload, csv_to_upload)
+csv_to_upload = yesterday + "_responses.csv"
+files_to_upload = (csv_to_upload)
 
 
 def upload(files_to_upload):  # need to change this function name
     for f in files_to_upload:
         try:
-            filepath = pathlib.Path("/home/pi/srvy/export/" + f)
+            filepath = pathlib.Path("../archive/" + f)
             print(f, filepath)
             upload_files(filepath, f)
             print('passed ' + f)
