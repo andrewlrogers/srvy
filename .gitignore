@@ -82,6 +82,7 @@ tags
 .pyc
 *flymake.py
 srvy/export/
+*.db
 
 # Config files
 srvy/srvy.config
