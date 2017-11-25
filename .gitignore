@@ -88,3 +88,4 @@ srvy/srvy.config
 .idea/
 
 *.out
+git config --global user.email "brian@briansuhr.com"
