@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-""" Downloads questions from dropbox to be integrated into srvy """
+""" places the most recent datetime_responses.csv on to remote dropbox location and overwrites remote srvy.db with local srvy.db """
 
 import dropbox
 import pathlib
@@ -9,7 +9,7 @@ from configparser import ConfigParser
 
 # Dropbox Configuration
 parser = ConfigParser()
-parser.read('../srvy.config')
+parser.read('../configuration/srvy.config')
 dropbox_token = parser.get('dropbox', 'token')
 
 """ S E T U P _ V A R I A B L E S """
@@ -20,34 +20,23 @@ yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 # Creates a dropbox object
 dbx = dropbox.Dropbox(dropbox_token)
 
-""" D O W N L O A D I N G _ FUNCTIONS """
-
-
-def download_questions():
-    """downloads csv from dropbox and overwrites locally"""
-    local = '/home/pi/srvy/synch/questions.txt'  # The folder/file locally that we want the files to download to.
-    with open(local, 'wb') as f:
-        metadata, res = dbx.files_download('/questions.txt')
-        f.write(res.content)
-
 
 """ U P L O A D I N G _ FUNCTIONS"""
 
 # the source files to upload
-chart_to_upload = yesterday + ".html"
-csv_to_upload = yesterday + ".csv"
-files_to_upload = (chart_to_upload, csv_to_upload)
+csv_to_upload = str(yesterday) + "_responses.csv"
+files_to_upload = (csv_to_upload, "srvy.db")
 
 
 def upload(files_to_upload):  # need to change this function name
     for f in files_to_upload:
         try:
-            filepath = pathlib.Path("/home/pi/srvy/export/" + f)
+            filepath = pathlib.Path("../archive/" + f)
             print(f, filepath)
             upload_files(filepath, f)
             print('passed ' + f)
         except IOError:
-            print('No such file')
+            print('No such file: ' + f)
 
 
 def upload_files(filepath, filename):
@@ -64,6 +53,5 @@ def upload_files(filepath, filename):
 
 
 """ M A I N """
-download_questions()
 upload(files_to_upload)
 # upload_files(pathlib.Path("/home/pi/srvy/export/srvy2017-02-18.csv"), "srvy2017-02-18.csv")
