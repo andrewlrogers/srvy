@@ -87,7 +87,7 @@ def main():
             opinion = 1
             add_response_to_database(qs, opinion)
 
-        elif opinion != "-1":
+        elif opinion == "-1":
             sleep(.5)
             opinion = -1
             add_response_to_database(qs, opinion)
