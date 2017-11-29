@@ -80,14 +80,14 @@ def main():
 
     while True:
 
-        opinion = input("Opinion: ")
+        opinion = input("Opinion [y/n]: ")
 
-        if opinion == "1":
+        if opinion == "y":
             sleep(.5)
             opinion = 1
             add_response_to_database(qs, opinion)
 
-        elif opinion == "-1":
+        elif opinion == "n":
             sleep(.5)
             opinion = -1
             add_response_to_database(qs, opinion)
