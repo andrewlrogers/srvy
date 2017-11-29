@@ -1,3 +1,6 @@
+#!/usr/bin/python
+""" checks to see if srvy.db exists in ../archive. If not it creates the db and appropriate table """
+
 import sqlite3
 from sqlite3 import Error
 

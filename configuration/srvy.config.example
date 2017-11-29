@@ -2,17 +2,12 @@
 token = INSERT_DROPBOX_TOKEN_HERE
 
 [screen]
-width = 800
-height = 480
+width = 1440
+height = 900
 
 [colors]
-background_color = [(105, 58, 119), (162, 173, 0), (125, 154, 170), (86, 90,92)]
-basic_background_color = [(0,0,0), (50,50,50), (153,153,153)]
+background_color = [(0,0,0), (50,50,50), (153,153,153)]
+
 
 [pygame]
 font = ("Futura, Helvetica, Arial", 48)
-
-[chart_colors]
-crocker_purple = ['#693A77', '#8b5c8e', '#ae7ea5', '#d1a1bc']
-crocker_contrast = ['#693A77','#A2AD00', '#565A5C']
-basic = ['#47ED2C', '#A1EF2C', '#F2E72D', '#F68E2E', '#F9332F']
