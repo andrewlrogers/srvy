@@ -15,7 +15,7 @@ today_timestamp = datetime.now().timestamp() #returns the dateime as a timestamp
 yesterday_timestamp = (datetime.now() - timedelta(days = 1)).timestamp()
 
 ## SQLITE3 VARIABLES
-sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
+sqlite_query = 'SELECT response_key, pythonDateTime, question, opinion FROM responses WHERE unixTime BETWEEN ' + str(yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
 
 
 export_directory = '../archive'
