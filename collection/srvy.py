@@ -63,7 +63,7 @@ def add_response_to_database(question, opinion):
 
     try:
         c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''',
-                  (str(current_date), current_unix_time, question, opinion))
+                  (current_date, current_unix_time, question, opinion))
         print("Successfully added response to database.")
         print("Thank you!")
     except Exception as e:
