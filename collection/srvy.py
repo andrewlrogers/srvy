@@ -38,11 +38,12 @@ def module_installed(module):
 def get_current_questions(file_location):
     """Add each question from a text file to a list. Questions should be separated by newlines."""
     with open(file_location, 'r') as csv_file:
-        readCSV = csv.reader(csv_file)
+        readCSV = csv.reader(csv_file, delimiter=',', quotechar='"')
         questions = []
         for row in readCSV:
-            question = row[0]
-            questions.append(question)
+            if row:
+                question = row[0]
+                questions.append(question)
         return questions
 
 
