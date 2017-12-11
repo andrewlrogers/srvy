@@ -49,6 +49,7 @@ def get_current_questions(file_location):
 
 def random_questions():
     """pulls returns a random question into main loop."""
+    question = get_current_questions(question_csv_location)
     return random.choice(question)
 
 
@@ -94,5 +95,4 @@ def main():
             add_response_to_database(qs, opinion)
 
 
-question = get_current_questions(question_csv_location)
 main()
