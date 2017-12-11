@@ -33,4 +33,4 @@ def download_questions():
 
 # MAIN
 
-upload(files_to_upload)
+download_questions()
