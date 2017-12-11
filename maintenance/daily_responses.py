@@ -31,8 +31,11 @@ c = conn.cursor()
 
 try:
     c.execute(sqlite_query)
+    headers = [row[0] for row in c.description]
     csvWriter = csv.writer(open(full_export_path, 'w'))
     rows = c.fetchall()
+
+    csvWriter.writerow(headers)
 
     for row in rows:
         csvWriter.writerow(row)
