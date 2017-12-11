@@ -90,5 +90,6 @@ configuration/srvy.config
 *.out
 
 # Ignore archive files
+archive/
 *.db
 *.csv
