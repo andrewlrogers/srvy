@@ -7,16 +7,15 @@ from datetime import datetime, timedelta
 import os
 import time
 
-
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
-today_timestamp = datetime.now().timestamp() #returns the dateime as a timestamp
-yesterday_timestamp = (datetime.now() - timedelta(days = 1)).timestamp()
+today_timestamp = datetime.now().timestamp()  # returns the dateime as a timestamp
+yesterday_timestamp = (datetime.now() - timedelta(days=1)).timestamp()
 
 ## SQLITE3 VARIABLES
-sqlite_query = 'SELECT response_key, pythonDateTime, question, opinion FROM responses WHERE unixTime BETWEEN ' + str(yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
-
+sqlite_query = 'SELECT response_key, pythonDateTime, question, opinion FROM responses WHERE unixTime BETWEEN ' + str(
+    yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
 
 export_directory = '../archive'
 export_filename = yesterday + '_responses' + '.csv'
@@ -25,8 +24,7 @@ full_export_path = os.path.join(export_directory, export_filename)
 sqlite_file = '../archive/srvy.db'
 table_name = 'responses'
 
-
-conn =  sqlite3.connect(sqlite_file)
+conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
 
 try:

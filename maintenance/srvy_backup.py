@@ -20,7 +20,6 @@ yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 # Creates a dropbox object
 dbx = dropbox.Dropbox(dropbox_token)
 
-
 """ U P L O A D I N G _ FUNCTIONS"""
 
 # the source files to upload

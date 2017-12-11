@@ -8,7 +8,6 @@ import sqlite3
 import csv
 from configparser import ConfigParser
 
-
 # VARIABLES
 question_csv_location = '../archive/questions.csv'
 
@@ -100,6 +99,5 @@ if __name__ == '__main__':
     except ImportError:
         print("pygame is not installed.")
         pass
-
 
     main()
