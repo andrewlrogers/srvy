@@ -101,14 +101,6 @@ def main():
             opinion = -1
             add_response_to_database(qs, opinion)
 
-        elif yes_button.is_pressed:
-            opinion = 1
-            add_response_to_database(qs, opinion)
-
-        elif no_button.is_pressed:
-            opinion = -1
-            add_response_to_database(qs, opinion)
-
 
 
 
