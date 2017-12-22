@@ -87,20 +87,21 @@ def main():
                 opinion = -1
                 add_response_to_database(qs, opinion)
     else:
-                print(qs)
-                while True:
+        if module_installed('gpiozero') == True: #check to see if gpiozero is installed
+            print(qs)
+            while True:
 
-                    opinion = input("No one cares about your opinion [y/n]: ")
+                if like.is_pressed():
+                    sleep(.5)
+                    opinion = 1
+                    add_response_to_database(qs, opinion)
 
-                    if opinion == "y":
-                        sleep(.5)
-                        opinion = 1
-                        add_response_to_database(qs, opinion)
-
-                    elif opinion == "n":
-                        sleep(.5)
-                        opinion = -1
-                        add_response_to_database(qs, opinion)
+                elif dilike.is_pressed():
+                    sleep(.5)
+                    opinion = -1
+                    add_response_to_database(qs, opinion)
+        else:
+            pass # if you force gpiozero, but it's not installed it kicks you out.
 
 
 if __name__ == '__main__':
@@ -109,6 +110,8 @@ if __name__ == '__main__':
 
     try:
         from gpiozero import Button
+        like = Button(26)
+        dislike = Button(19)
     except ImportError:
         print("gpiozero is not installed.")
         pass
