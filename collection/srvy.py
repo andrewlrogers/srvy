@@ -7,22 +7,9 @@ import random
 import sqlite3
 import csv
 from configparser import ConfigParser
+from gpiozero import Button
+import pygame
 
-if __name__ == '__main__':
-
-    # Check if running on a Raspberry Pi
-
-    try:
-        from gpiozero import Button
-    except ImportError:
-        print("gpiozero is not installed.")
-        pass
-
-    try:
-        import pygame
-    except ImportError:
-        print("pygame is not installed.")
-        pass
 
 # VARIABLES
 question_csv_location = '../archive/questions.csv'
