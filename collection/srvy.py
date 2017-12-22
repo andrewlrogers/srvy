@@ -13,6 +13,10 @@ question_csv_location = '../archive/questions.csv'
 
 sqlite_file = '../archive/srvy.db'
 
+#Read Configuration File and set variables
+parser = ConfigParser()
+parser.read('../configuration/srvy.config')
+keyboard = parser.get('advanced', 'keyboard')
 
 # FUNCTIONS
 
@@ -67,21 +71,36 @@ def add_response_to_database(question, opinion):
 
 def main():
     qs = random_questions()  # calls questions function that returns random question.
-    print(qs)
+    if keyboard == True:
+        print(qs)
+        while True:
 
-    while True:
+            opinion = input("Opinion [y/n]: ")
 
-        opinion = input("Opinion [y/n]: ")
+            if opinion == "y":
+                sleep(.5)
+                opinion = 1
+                add_response_to_database(qs, opinion)
 
-        if opinion == "y":
-            sleep(.5)
-            opinion = 1
-            add_response_to_database(qs, opinion)
+            elif opinion == "n":
+                sleep(.5)
+                opinion = -1
+                add_response_to_database(qs, opinion)
+    else:
+                print(qs)
+                while True:
 
-        elif opinion == "n":
-            sleep(.5)
-            opinion = -1
-            add_response_to_database(qs, opinion)
+                    opinion = input("No one cares about your opinion [y/n]: ")
+
+                    if opinion == "y":
+                        sleep(.5)
+                        opinion = 1
+                        add_response_to_database(qs, opinion)
+
+                    elif opinion == "n":
+                        sleep(.5)
+                        opinion = -1
+                        add_response_to_database(qs, opinion)
 
 
 if __name__ == '__main__':

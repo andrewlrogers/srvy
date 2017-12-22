@@ -8,6 +8,8 @@ height = 900
 [colors]
 background_color = [(0,0,0), (50,50,50), (153,153,153)]
 
-
 [pygame]
 font = ("Futura, Helvetica, Arial", 48)
+
+[advanced]
+keyboard = False
