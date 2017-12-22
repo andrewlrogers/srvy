@@ -7,17 +7,12 @@ import random
 import sqlite3
 import csv
 from configparser import ConfigParser
-from gpiozero import Button
-import pygame
-
 
 # VARIABLES
 question_csv_location = '../archive/questions.csv'
 
 sqlite_file = '../archive/srvy.db'
 
-yes_button = Button(26)
-no_button = Button(19)
 
 # FUNCTIONS
 
@@ -89,6 +84,20 @@ def main():
             add_response_to_database(qs, opinion)
 
 
+if __name__ == '__main__':
 
+    # Check if running on a Raspberry Pi
 
-    main()
+    try:
+        from gpiozero import Button
+    except ImportError:
+        print("gpiozero is not installed.")
+        pass
+
+    try:
+        import pygame
+    except ImportError:
+        print("pygame is not installed.")
+        pass
+
+main()
