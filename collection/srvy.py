@@ -17,6 +17,8 @@ sqlite_file = '../archive/srvy.db'
 parser = ConfigParser()
 parser.read('../configuration/srvy.config')
 keyboard = parser.get('advanced', 'keyboard')
+screen_width= parser.get('screen', 'width')
+screen_height = parser.get('screen', 'height')
 
 # FUNCTIONS
 
@@ -26,6 +28,13 @@ def module_installed(module):
         return True
     else:
         return False
+
+def write_to_display(message):
+    "takes a text variable and writes it to the display"
+    text = font.render(message, True, (255,255,255))
+    screen.fill((100,100,100))
+    screen.blit(text, (screen_width/2 - text.get_rect().width/2, screen_height/2))
+    pygame.display.flip()
 
 
 def get_current_questions(file_location):
@@ -87,16 +96,16 @@ def main():
                 opinion = -1
                 add_response_to_database(qs, opinion)
     else:
-        if module_installed('gpiozero') == True: #check to see if gpiozero is installed
+        if module_installed('gpiozero'): if module_installed('pygame') True: #check to see if gpiozero is installed
             print(qs)
             while True:
 
-                if like.is_pressed():
+                if like.is_pressed:
                     sleep(.5)
                     opinion = 1
                     add_response_to_database(qs, opinion)
 
-                elif dilike.is_pressed():
+                elif dislike.is_pressed:
                     sleep(.5)
                     opinion = -1
                     add_response_to_database(qs, opinion)
@@ -118,6 +127,10 @@ if __name__ == '__main__':
 
     try:
         import pygame
+        pygame.init()
+        screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
+        pygame.mouse.set_visible(False) # Hides the mouse cursor
+        font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)
     except ImportError:
         print("pygame is not installed.")
         pass
