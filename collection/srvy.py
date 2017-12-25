@@ -69,6 +69,8 @@ def add_response_to_database(question, opinion):
                   (current_date, current_unix_time, question, opinion))
         print("Successfully added response to database.")
         print("Thank you!")
+        write_to_display('Thank You!')
+        sleep(5)
     except Exception as e:
         print(e)
 
@@ -99,6 +101,7 @@ def main():
         if module_installed('gpiozero'):
             if module_installed('pygame'): #check to see if gpiozero is installed
                 print(qs)
+                write_to_display(qs)
                 while True:
 
                     if like.is_pressed:
