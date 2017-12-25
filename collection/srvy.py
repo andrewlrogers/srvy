@@ -17,8 +17,8 @@ sqlite_file = '../archive/srvy.db'
 parser = ConfigParser()
 parser.read('../configuration/srvy.config')
 keyboard = parser.get('advanced', 'keyboard')
-screen_width= parser.get('screen', 'width')
-screen_height = parser.get('screen', 'height')
+screen_width= int(parser.get('screen', 'width'))
+screen_height = int(parser.get('screen', 'height'))
 
 # FUNCTIONS
 
@@ -125,6 +125,7 @@ if __name__ == '__main__':
         from gpiozero import Button
         like = Button(26)
         dislike = Button(19)
+        print('gpiozero installed.')
     except ImportError:
         print("gpiozero is not installed.")
         pass
@@ -135,6 +136,7 @@ if __name__ == '__main__':
         screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN) #remove pygame.FULLSCREEN for windowed mode
         pygame.mouse.set_visible(False) # Hides the mouse cursor
         font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)
+        print('pygame installed.')
     except ImportError:
         print("pygame is not installed.")
         pass
