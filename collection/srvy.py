@@ -96,19 +96,23 @@ def main():
                 opinion = -1
                 add_response_to_database(qs, opinion)
     else:
-        if module_installed('gpiozero'): if module_installed('pygame'): #check to see if gpiozero is installed
-            print(qs)
-            while True:
+        if module_installed('gpiozero'):
+            if module_installed('pygame'): #check to see if gpiozero is installed
+                print(qs)
+                while True:
 
-                if like.is_pressed:
-                    sleep(.5)
-                    opinion = 1
-                    add_response_to_database(qs, opinion)
+                    if like.is_pressed:
+                        sleep(.5)
+                        opinion = 1
+                        add_response_to_database(qs, opinion)
 
-                elif dislike.is_pressed:
-                    sleep(.5)
-                    opinion = -1
-                    add_response_to_database(qs, opinion)
+                    elif dislike.is_pressed:
+                        sleep(.5)
+                        opinion = -1
+                        add_response_to_database(qs, opinion)
+            else:
+                print('Pygame not installed')
+                pass
         else:
             pass # if you force gpiozero, but it's not installed it kicks you out.
 
