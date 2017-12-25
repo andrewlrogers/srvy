@@ -96,7 +96,7 @@ def main():
                 opinion = -1
                 add_response_to_database(qs, opinion)
     else:
-        if module_installed('gpiozero'): if module_installed('pygame') True: #check to see if gpiozero is installed
+        if module_installed('gpiozero'): if module_installed('pygame'): #check to see if gpiozero is installed
             print(qs)
             while True:
 
