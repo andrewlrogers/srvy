@@ -19,7 +19,8 @@ parser.read('../configuration/srvy.config')
 keyboard = parser.get('advanced', 'keyboard')
 screen_width= int(parser.get('screen', 'width'))
 screen_height = int(parser.get('screen', 'height'))
-
+background_color = parser.get('colors', 'background_color')
+text_color = parser.get('colors', 'text_color')
 # FUNCTIONS
 
 
@@ -29,11 +30,11 @@ def module_installed(module):
     else:
         return False
 
-def write_to_display(message):
+def write_to_display(message, message_color, message_background):
     "takes a text variable and writes it to the display"
-    text = font.render(message, True, (255,255,255))
-    screen.fill((100,100,100))
-    screen.blit(text, (screen_width/2 - text.get_rect().width/2, screen_height/2))
+    text = font.render(message, True, message_color)
+    screen.fill(message_background)
+    screen.blit(text, (screen_width/2 - text.get_rect().width/2, screen_height/2)) #centers the text on the screen.
     pygame.display.flip()
 
 
@@ -69,7 +70,7 @@ def add_response_to_database(question, opinion):
                   (current_date, current_unix_time, question, opinion))
         print("Successfully added response to database.")
         print("Thank you!")
-        write_to_display('Thank You!')
+        write_to_display('Thank You!',(255,0,0),(255,255,255) )
         sleep(5)
     except Exception as e:
         print(e)
@@ -101,7 +102,7 @@ def main():
         if module_installed('gpiozero'):
             if module_installed('pygame'): #check to see if gpiozero is installed
                 print(qs)
-                write_to_display(qs)
+                write_to_display(qs, random.choice(text_color), random.choice(background_color))
                 while True:
 
                     if like.is_pressed:
@@ -117,6 +118,7 @@ def main():
                 print('Pygame not installed')
                 pass
         else:
+            print('gpiozero is not installed.')
             pass # if you force gpiozero, but it's not installed it kicks you out.
 
 
@@ -130,7 +132,7 @@ if __name__ == '__main__':
         dislike = Button(19)
         print('gpiozero installed.')
     except ImportError:
-        print("gpiozero is not installed.")
+        print('gpiozero is not installed.')
         pass
 
     try:
@@ -141,7 +143,7 @@ if __name__ == '__main__':
         font = pygame.font.SysFont("Futura, Helvetica, Arial", 48)
         print('pygame installed.')
     except ImportError:
-        print("pygame is not installed.")
+        print('pygame is not installed.')
         pass
 
 main()
