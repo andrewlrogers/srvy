@@ -6,6 +6,7 @@ from datetime import datetime
 import random
 import sqlite3
 import csv
+import ast
 from configparser import ConfigParser
 
 # VARIABLES
@@ -19,7 +20,7 @@ parser.read('../configuration/srvy.config')
 keyboard = parser.get('advanced', 'keyboard')
 screen_width= int(parser.get('screen', 'width'))
 screen_height = int(parser.get('screen', 'height'))
-background_color = parser.get('colors', 'background_color')
+background_color = ast.literal_eval(parser.get('colors', 'background_color'))
 text_color = parser.get('colors', 'text_color')
 # FUNCTIONS
 
