@@ -22,6 +22,8 @@ screen_width= int(parser.get('screen', 'width'))
 screen_height = int(parser.get('screen', 'height'))
 background_color = ast.literal_eval(parser.get('colors', 'background_color'))
 text_color = ast.literal_eval(parser.get('colors', 'text_color'))
+question_interval = int(parser.get('questions', 'interval'))
+question_font = parser.get('questions', 'font')
 
 # FUNCTIONS
 def module_installed(module):
@@ -71,7 +73,7 @@ def add_response_to_database(question, opinion):
         print("Successfully added response to database.")
         print("Thank you!")
         write_to_display('Thank You!',(255,0,0),(255,255,255) )
-        sleep(5)
+        sleep(question_interval)
     except Exception as e:
         print(e)
 
