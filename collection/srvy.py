@@ -21,10 +21,9 @@ keyboard = parser.get('advanced', 'keyboard')
 screen_width= int(parser.get('screen', 'width'))
 screen_height = int(parser.get('screen', 'height'))
 background_color = ast.literal_eval(parser.get('colors', 'background_color'))
-text_color = parser.get('colors', 'text_color')
+text_color = ast.literal_eval(parser.get('colors', 'text_color'))
+
 # FUNCTIONS
-
-
 def module_installed(module):
     if module in sys.modules:
         return True
