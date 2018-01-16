@@ -7,34 +7,33 @@ from datetime import datetime, timedelta
 import os
 import time
 
-
 today = str(datetime.now().strftime('%Y-%m-%d'))
 yesterday = str((datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d'))
 
-now_datetime = time.mktime((datetime.now()).timetuple()) #returns the dateime as a timestamp
-prev_datetime = time.mktime((datetime.now() - timedelta(days=1)).timetuple())
+today_timestamp = datetime.now().timestamp()  # returns the dateime as a timestamp
+yesterday_timestamp = (datetime.now() - timedelta(days=1)).timestamp()
 
 ## SQLITE3 VARIABLES
-sqlite_query = 'SELECT * FROM responses WHERE unixTime BETWEEN ' + str(prev_datetime) + ' AND ' + str(now_datetime) + ' '
+sqlite_query = 'SELECT response_key, pythonDateTime, question, opinion FROM responses WHERE unixTime BETWEEN ' + str(
+    yesterday_timestamp) + ' AND ' + str(today_timestamp) + ' '
 
-
-export_directory = '../export'
-export_filename = 'srvy' + yesterday + '.csv'
+export_directory = '../archive'
+export_filename = yesterday + '_responses' + '.csv'
 full_export_path = os.path.join(export_directory, export_filename)
 
-sqlite_file = '../srvy.db'
+sqlite_file = '../archive/srvy.db'
 table_name = 'responses'
 
-
-conn =  sqlite3.connect(sqlite_file)
+conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
-
-#c.execute("SELECT * FROM responses WHERE date LIKE '%"+ current_date +"%'")
 
 try:
     c.execute(sqlite_query)
+    headers = [row[0] for row in c.description]
     csvWriter = csv.writer(open(full_export_path, 'w'))
     rows = c.fetchall()
+
+    csvWriter.writerow(headers)
 
     for row in rows:
         csvWriter.writerow(row)
