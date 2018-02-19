@@ -16,7 +16,7 @@ sqlite_file = '../archive/srvy.db'
 
 #Read Configuration File and set variables
 parser = ConfigParser()
-parser.read('../configuration/srvy.config')
+parser.read(r'../configuration/srvy.config')
 keyboard = parser.get('advanced', 'keyboard')
 screen_width= int(parser.get('screen', 'width'))
 screen_height = int(parser.get('screen', 'height'))
