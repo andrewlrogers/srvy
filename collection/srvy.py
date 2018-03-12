@@ -74,15 +74,14 @@ def add_response_to_database(question, opinion):
     try:
         c.execute('''INSERT INTO responses (pythonDateTime, unixTime, question, opinion) VALUES (?,?,?,?)''',
                   (current_date, current_unix_time, question, opinion))
+        conn.commit()
+        conn.close()
+        write_to_display('Thank You!',(255,0,0),(255,255,255) )
         print("Successfully added response to database.")
         print("Thank you!")
-        write_to_display('Thank You!',(255,0,0),(255,255,255) )
         sleep(question_interval)
     except Exception as e:
         print(e)
-
-    conn.commit()
-    conn.close()
 
     main()
 
