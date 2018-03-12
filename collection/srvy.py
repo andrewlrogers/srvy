@@ -8,6 +8,7 @@ import sqlite3
 import csv
 import ast
 from configparser import ConfigParser
+import setup_db
 
 # VARIABLES
 question_csv_location = '../archive/questions.csv'
@@ -24,6 +25,9 @@ background_color = ast.literal_eval(parser.get('colors', 'background_color'))
 text_color = ast.literal_eval(parser.get('colors', 'text_color'))
 question_interval = int(parser.get('questions', 'interval'))
 question_font = parser.get('questions', 'font')
+
+# Create database if it doesn't exist.
+setup_db
 
 # FUNCTIONS
 def module_installed(module):
