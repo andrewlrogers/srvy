@@ -7,7 +7,12 @@ height = 900
 
 [colors]
 background_color = [(0,0,0), (50,50,50), (153,153,153)]
+text_color = [(255,255,255), (255, 0, 0)]
 
-
-[pygame]
+[questions]
 font = ("Futura, Helvetica, Arial", 48)
+interval = 5
+
+
+[advanced]
+keyboard = False
